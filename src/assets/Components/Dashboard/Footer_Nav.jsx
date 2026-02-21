@@ -15,14 +15,15 @@ export default function Footer_Nav() {
           <span className="text-[11px] font-semibold">Home</span>
         </a>
 
-        <a className="flex flex-col items-center gap-1 text-gray-500" href="#">
-          <IoStatsChart size={22} />
-          <span className="text-[11px]">Reports</span>
-        </a>
 
         <a className="flex flex-col items-center gap-1 text-gray-500" href="#">
           <MdGroups size={22} />
           <span className="text-[11px]">Customers</span>
+        </a>
+
+        <a className="flex flex-col items-center gap-1 text-gray-500" href="#">
+          <IoStatsChart size={22} />
+          <span className="text-[11px]">Reports</span>
         </a>
 
         <a className="flex flex-col items-center gap-1 text-gray-500" href="#">

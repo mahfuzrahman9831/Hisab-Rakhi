@@ -8,7 +8,7 @@ export default function Tranactions() {
     <h3 className="font-bold text-slate-900 text-lg">
       Recent Transactions
     </h3>
-    <button className="text-xs font-bold text-blue-600">
+    <button className="text-xs font-bold text-green-600">
       View All
     </button>
   </div>
