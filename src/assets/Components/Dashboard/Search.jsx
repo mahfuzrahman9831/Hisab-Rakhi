@@ -1,4 +1,7 @@
 import React from "react";
+import { IoMdSearch } from "react-icons/io";
+import { GoFilter } from "react-icons/go";
+import { MdDownload } from "react-icons/md";
 
 export default function Search() {
   return (
@@ -7,7 +10,7 @@ export default function Search() {
         {/* Search Input */}
         <div className="relative flex-1">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
-            🔍
+            <IoMdSearch />
           </span>
           <input
             type="text"
@@ -18,12 +21,12 @@ export default function Search() {
 
         {/* Filter Button */}
         <button className="w-[42px] h-[42px] flex items-center justify-center bg-white border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-100 transition">
-          ⚙️
+          <GoFilter />
         </button>
 
         {/* PDF Button */}
-        <button className="w-[42px] h-[42px] flex items-center justify-center bg-blue-600 text-white rounded-xl shadow-sm hover:opacity-90 active:scale-95 transition">
-          📄
+        <button className="w-[42px] h-[42px] flex items-center justify-center bg-green-500 hover:bg-green-600 text-white rounded-xl shadow-sm hover:opacity-90 active:scale-95 transition">
+          <MdDownload />
         </button>
       </section>
     </div>
