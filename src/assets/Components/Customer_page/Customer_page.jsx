@@ -13,9 +13,9 @@ export default function Customer_page() {
         <BalanceSummary></BalanceSummary>
         <Search_Sort></Search_Sort>
         <Customer_list></Customer_list>
-         <button className="absolute right-6 bottom-14 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-xl shadow-green-500/30 flex items-center justify-center z-40 transition active:scale-95">
+         {/* <button className="absolute right-6 bottom-14 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-xl shadow-green-500/30 flex items-center justify-center z-40 transition active:scale-95">
           <span className="text-3xl font-bold leading-none">+</span>
-        </button>
+        </button> */}
         {/* <Add_Customer_Btn></Add_Customer_Btn> */}
         <Footer_Nav></Footer_Nav>
     </div>
