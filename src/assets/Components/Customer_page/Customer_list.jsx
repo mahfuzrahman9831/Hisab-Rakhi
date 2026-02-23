@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Customer_list() {
   return (
-    <main className="flex-1 overflow-y-auto px-4 pb-32">
-      <div className="mt-2 space-y-1">
+    
+      <div className="px-4 pb-32">
 
         {/* Item 1 */}
         <div className="flex items-center justify-between py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer rounded-lg px-2">
@@ -131,6 +131,6 @@ export default function Customer_list() {
         </div>
 
       </div>
-    </main>
+   
   )
 }

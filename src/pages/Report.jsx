@@ -8,8 +8,8 @@ import Header from "../assets/Components/Common/Header";
 
 export default function Report() {
   return (
-    <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
-      <Header title="Reports"></Header>
+    <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] pb-24">
+      <Header title="Reports" backTo="/"></Header>
       <ReportActions></ReportActions>
       <MonthlyOverview></MonthlyOverview>
       <IncomeVSExpense></IncomeVSExpense>
