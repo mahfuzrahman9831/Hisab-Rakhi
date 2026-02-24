@@ -5,8 +5,6 @@ import Customer_list from '../assets/Components/Customer_page/Customer_list'
 import Header from '../assets/Components/Common/Header'
 
 
-console.log("Customer Header:", Header);
-
 
 export default function Customer() {
   return (

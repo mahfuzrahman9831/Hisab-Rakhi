@@ -6,6 +6,9 @@ import Settings from "./pages/Settings";
 import AddCustomerPage from "./pages/AddCustomerPage";
 import Customer from "./pages/Customer";
 import Report from "./pages/Report";
+import { CustomerProvider } from "./context/CustomerContext";
+
+
 
 function App() {
   const location = useLocation();

@@ -8,69 +8,58 @@ import { NavLink } from "react-router-dom";
 export default function Footer_Nav() {
   return (
     <div>
-     <nav className="fixed bottom-0 left-0 right-0 z-50 pointer-events-auto">
-      <div className="flex justify-between items-center max-w-sm mx-auto">
-
-        <NavLink 
-           to="/" end 
-           className={({ isActive }) =>
+      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[380px] bg-white border-t border-gray-200 z-50">
+        <div className="flex justify-between items-center px-6 py-3">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
               `flex flex-col items-center gap-1 ${
-                isActive
-                  ? "text-green-500"
-                  : "text-gray-400"
+                isActive ? "text-green-500" : "text-gray-400"
               }`
             }
-           >
-          <MdDashboard size={22} />
-          <span className="text-[11px] font-semibold">Home</span>
-        </NavLink>
-        
-    
+          >
+            <MdDashboard size={22} />
+            <span className="text-[11px] font-semibold">Home</span>
+          </NavLink>
 
-         <NavLink 
-           to="/customer" 
-           className={({ isActive }) =>
+          <NavLink
+            to="/customer"
+            className={({ isActive }) =>
               `flex flex-col items-center gap-1 ${
-                isActive
-                  ? "text-green-500"
-                  : "text-gray-400"
+                isActive ? "text-green-500" : "text-gray-400"
               }`
             }
-           >
-         <MdGroups size={22} />
-          <span className="text-[11px]">Customers</span>
-        </NavLink>
+          >
+            <MdGroups size={22} />
+            <span className="text-[11px]">Customers</span>
+          </NavLink>
 
-
-        <NavLink 
-         to="/report" className={({ isActive }) =>
+          <NavLink
+            to="/report"
+            className={({ isActive }) =>
               `flex flex-col items-center gap-1 ${
-                isActive
-                  ? "text-green-500"
-                  : "text-gray-400"
+                isActive ? "text-green-500" : "text-gray-400"
               }`
-            }>
-          <IoStatsChart size={22} />
-          <span className="text-[11px]">Reports</span>
-        </NavLink>
+            }
+          >
+            <IoStatsChart size={22} />
+            <span className="text-[11px]">Reports</span>
+          </NavLink>
 
-  
-
-        <NavLink 
-          to="/settings" 
-          className={({ isActive }) =>
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
               `flex flex-col items-center gap-1 ${
-                isActive
-                  ? "text-green-500"
-                  : "text-gray-400"
+                isActive ? "text-green-500" : "text-gray-400"
               }`
-            }>
-          <FaGear size={22} />
-          <span className="text-[11px]">Settings</span>
-        </NavLink>
-
-      </div>
-    </nav>
+            }
+          >
+            <FaGear size={22} />
+            <span className="text-[11px]">Settings</span>
+          </NavLink>
+        </div>
+      </nav>
     </div>
   );
 }

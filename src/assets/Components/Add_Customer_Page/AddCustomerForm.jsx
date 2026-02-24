@@ -1,6 +1,13 @@
 import { FiUser, FiPhone, FiMapPin } from "react-icons/fi";
 
-export default function AddCustomerForm() {
+export default function AddCustomerForm({
+          name,
+          setName,
+          phone,
+          setPhone,
+          address,
+          setAddress
+        }) {
   return (
     <section className="space-y-6 px-4 py-6 bg-white">
 
@@ -16,6 +23,8 @@ export default function AddCustomerForm() {
         <div className="relative group">
           <input
             id="full-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Enter customer name..."
             className="w-full h-14 px-4 pr-12 rounded-xl border border-gray-200 bg-white text-gray-900 text-base transition-all outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500"
@@ -37,6 +46,8 @@ export default function AddCustomerForm() {
         <div className="relative group">
           <input
             id="phone-number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             type="tel"
             placeholder="e.g. +8801..."
             className="w-full h-14 px-4 pr-12 rounded-xl border border-gray-200 bg-white text-gray-900 text-base transition-all outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500"
@@ -58,6 +69,8 @@ export default function AddCustomerForm() {
         <div className="relative group">
           <textarea
             id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             placeholder="Street, City, Zip..."
             className="w-full min-h-[140px] p-4 pr-12 rounded-xl border border-gray-200 bg-white text-gray-900 text-base resize-none transition-all outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500"
           />

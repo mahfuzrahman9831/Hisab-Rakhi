@@ -14,7 +14,7 @@ export default function PageHeader({
   };
 
   return (
-    <header className="sticky top-0 bg-white border-b px-4 py-4 flex items-center justify-between z-10">
+    <header className="sticky top-0 bg-white border-b shadow-sm border-gray-200 px-4 py-4 flex items-center justify-between z-10 w-full">
 
       {showBack && (
         <button
