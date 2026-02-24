@@ -24,8 +24,23 @@ function timeAgo(date) {
 }
 
 export default function Tranactions() {
-
   const { customers } = useCustomers();
+
+  function getInitials(name) {
+    if (!name) return "";
+
+    const parts = name.trim().split(" ");
+
+    if (parts.length === 1) {
+      return parts[0][0].toUpperCase();
+    }
+
+    const first = parts[0][0];
+    const last = parts[parts.length - 1][0];
+
+    return (first + last).toUpperCase();
+  }
+
   return (
     <div>
       <section className="space-y-4 px-4 pb-24">
@@ -38,6 +53,7 @@ export default function Tranactions() {
 
         <div className="space-y-3">
           {/* Transaction 1 */}
+
           <div className="space-y-3 mt-4">
             {customers.length === 0 && (
               <p className="text-center text-gray-400 py-6">
@@ -49,61 +65,49 @@ export default function Tranactions() {
               .slice()
               .reverse()
               .map((customer) => (
+              
                 <div
                   key={customer.id}
-                  className="flex items-center justify-between bg-white p-3 rounded-2xl border border-gray-100 shadow-sm"
+                  className="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"
                 >
-                  {/* Left Side */}
+                  {/* Left Section */}
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                      <span className="text-green-600 text-lg">👤</span>
+                    {" "}
+                
+                    {/* Avatar */}
+                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                      <span className="text-green-700 font-semibold text-sm">
+                        {getInitials(customer.name)}
+                      </span>
                     </div>
-
-                    <div>
-                      <p className="text-sm font-semibold text-gray-800">
+                    {/* Name + Time */}
+                    <div className="flex flex-col items-start justify-center">
+                      <p className="text-[15px] font-medium text-gray-800 leading-tight">
                         {customer.name}
                       </p>
 
-                      <p className="text-[11px] text-gray-500">
+                      
+                      <p className="text-[11px] text-gray-400 mt-0.5 block text-left">
                         {timeAgo(customer.createdAt)}
                       </p>
                     </div>
                   </div>
 
-                  {/* Right Side */}
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-gray-900">
+                  {/* Right Section */}
+                  <div className="flex flex-col items-end justify-center">
+                    <p className="text-base font-semibold text-gray-900 leading-none">
                       ৳ {customer.balance}
                     </p>
 
-                    <p className="text-[11px] text-gray-400">Cash</p>
+                    <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">
+                      Cash
+                    </p>
                   </div>
                 </div>
               ))}
           </div>
 
-          {/* Transaction 2 */}
-          {/* <div className="flex items-center justify-between bg-white p-3 rounded-2xl border border-gray-100 shadow-sm">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-          <span className="text-red-600 text-lg">📦</span>
-        </div>
-        <div>
-          <p className="text-sm font-semibold">Inventory Purchase</p>
-          <p className="text-[11px] text-gray-500">
-            11 Jun • 04:15 PM
-          </p>
-        </div>
-      </div>
-      <div className="text-right">
-        <p className="text-sm font-bold text-red-600">
-          -৳ 4,500
-        </p>
-        <p className="text-[11px] text-gray-400">Bank</p>
-      </div>
-        </div> */}
-
-          
+      
         </div>
       </section>
     </div>
