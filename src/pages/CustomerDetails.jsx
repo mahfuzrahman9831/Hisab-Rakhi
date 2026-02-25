@@ -22,7 +22,7 @@ export default function CustomerDetails() {
   return (
     <>
       <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
-        <PageHeader title={customer.name}></PageHeader>
+        <PageHeader title={<span className="text-[15px] font-semibold">{customer.name}</span>}></PageHeader>
         <Customer_Name customer={customer}></Customer_Name>
         <Transaction_Form></Transaction_Form>
 

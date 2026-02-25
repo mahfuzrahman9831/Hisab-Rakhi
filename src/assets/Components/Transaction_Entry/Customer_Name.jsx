@@ -17,22 +17,22 @@ function getInitials(name) {
 }
 
 export default function Customer_Name({ customer }) {
-  
   const initials = getInitials(customer.name);
 
-  
   return (
     <div className="px-4 py-6 bg-gray-50 border-b border-gray-100">
       <div className="flex items-center justify-between mb-4">
         {/* Left Side */}
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl">
+          <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-medium text-xl shrink-0">
             {initials}
           </div>
 
-          <div>
-            <h2 className="text-lg font-bold text-gray-900">{customer.name}</h2>
-            <p className="text-sm text-gray-500">{customer.phone}</p>
+          <div className="flex flex-col items-start justify-center">
+            <h2 className="text-[15px] font-medium text-gray-800 leading-tight">
+              {customer.name}
+            </h2>
+            <p className="text-sm text-gray-500 text-left">{customer.phone}</p>
           </div>
         </div>
 
