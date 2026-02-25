@@ -1,13 +1,26 @@
-import React from "react";
-import {
-  IoTrendingUp,
-  IoTrendingDown,
-  IoCalendarOutline,
-} from "react-icons/io5";
+import React, { useState } from "react";
+import {IoCalendarOutline} from "react-icons/io5";
 import { FiChevronDown, FiCamera } from "react-icons/fi";
 import { FaUserPlus } from "react-icons/fa";
+import MobileDatePicker from "../../Components/Common/MobileDatePicker";
 
 export default function Transaction_Form() {
+
+   const [sell, setSell] = useState("");
+  const [buy, setBuy] = useState("");
+  const [details, setDetails] = useState("");
+  const [date, setDate] = useState(new Date());
+
+  const handleSubmit = () => {
+    const transaction = {
+      id: Date.now(),
+      sell,
+      buy,
+      details,
+      date,
+    };
+  };
+
   return (
     // <main className="flex-1 px-4 py-6 space-y-6">
     //   {/* Sell / দিলাম */}
@@ -229,16 +242,7 @@ export default function Transaction_Form() {
  {/* Date & Camera */}
        <div className="flex gap-4">
         {/* Date Button */}
-        <button className="flex-1 flex items-center justify-between px-4 py-4 bg-gray-100 rounded-2xl hover:bg-gray-200 transition-colors">
-           <div className="flex items-center gap-3">
-             <IoCalendarOutline className="text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">
-               May 24, 2024
-             </span>
-          </div>
-
-           <FiChevronDown className="text-gray-400 text-sm" />
-         </button>
+        <MobileDatePicker value={date} onChange={setDate} />
 
          {/* Camera Button */}
          <button className="flex items-center justify-center aspect-square px-4 bg-gray-100 rounded-2xl hover:bg-gray-200 transition-colors">
@@ -257,3 +261,4 @@ export default function Transaction_Form() {
 </main>
   );
 }
+
