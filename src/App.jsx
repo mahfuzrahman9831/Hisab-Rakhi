@@ -6,7 +6,8 @@ import Settings from "./pages/Settings";
 import AddCustomerPage from "./pages/AddCustomerPage";
 import Customer from "./pages/Customer";
 import Report from "./pages/Report";
-import { CustomerProvider } from "./context/CustomerContext";
+import CustomerDetails from "./pages/CustomerDetails";
+
 
 
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/report" element={<Report />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/add-customer" element={<AddCustomerPage />} />
+            <Route path="/customer/:id" element={<CustomerDetails />} />
           </Routes>
         </div>
 

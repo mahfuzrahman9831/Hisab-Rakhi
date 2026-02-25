@@ -1,6 +1,9 @@
 import React from "react";
 import { useCustomers } from "../../../Context/CustomerContext";
 import { MdChevronRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
+
 
 function timeAgo(date) {
   if (!date) return "Just now";
@@ -29,50 +32,58 @@ function timeAgo(date) {
 }
 
 export default function Customer_list() {
-
-
-
   function getInitials(name) {
-  if (!name) return "";
+    if (!name) return "";
 
-  const parts = name.trim().split(" ");
+    const parts = name.trim().split(" ");
 
-  if (parts.length === 1) {
-    return parts[0][0].toUpperCase();
+    if (parts.length === 1) {
+      return parts[0][0].toUpperCase();
+    }
+
+    const first = parts[0][0];
+    const last = parts[parts.length - 1][0];
+
+    return (first + last).toUpperCase();
   }
-
-  const first = parts[0][0];
-  const last = parts[parts.length - 1][0];
-
-  return (first + last).toUpperCase();
-}
 
   const { customers } = useCustomers();
 
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-sm">
-      {customers.map((customer) => (
-        <div
-          key={customer.id}
-          className="flex items-start justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition"
-        >
-          <div className="flex flex-col items-start justify-center">
-            <span className="text-[15px] font-medium text-gray-800 leading-tight">
-              {customer.name}
-            </span>
+      {customers
+        .slice()
+        .reverse()
+        .map((customer) => (
+          <div
+            key={customer.id}
+            className="flex items-start justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition"
+          >
+            <div className="flex flex-col items-start justify-center">
+              <span className="text-[15px] font-medium text-gray-800 leading-tight">
+                {customer.name}
+              </span>
 
-        
-            <span className="text-[11px] text-gray-400 mt-0.5 tracking-wide">
-              {timeAgo(customer.createdAt)}
-            </span>
-          </div>
+              <span className="text-[11px] text-gray-400 mt-0.5 tracking-wide">
+                {timeAgo(customer.createdAt)}
+              </span>
+            </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[15px] font-medium items-center text-gray-800">৳{customer.balance}</span>
-            <MdChevronRight className="text-gray-400 text-xl" />
-          </div>
-        </div>
-      ))}
+            <div className="flex items-center gap-2">
+              <span className="text-[15px] font-medium text-gray-800">
+                ৳{customer.balance}
+              </span>
+
+              <MdChevronRight
+                onClick={() => navigate(`/customer/${customer.id}`)}
+                className="text-gray-400 text-xl cursor-pointer"
+              />
+            </div>
+             </div>
+        ))}
     </div>
+    
   );
-}
+};
