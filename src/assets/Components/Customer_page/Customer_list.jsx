@@ -59,7 +59,7 @@ export default function Customer_list() {
         .map((customer) => (
           <div
             key={customer.id}
-            className="flex items-start justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition"
+            className="flex items-center justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition"
           >
             <div className="flex flex-col items-start justify-center">
               <span className="text-[15px] font-medium text-gray-800 leading-tight">
