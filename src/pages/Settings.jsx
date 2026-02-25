@@ -5,7 +5,7 @@ import Header from '../assets/Components/Common/Header'
 export default function Settings() {
   return (
    <div className='max-w-[380px] mx-auto w-full pb-24'>
-         <Header title="Settings" backTo="/"></Header>
+         <Header title="Settings" backTo="AUTO"></Header>
           <SettingsMainSection></SettingsMainSection>
           {/* <BottomNav></BottomNav> */}
       </div>

@@ -9,8 +9,18 @@ export default function PageHeader({
   const navigate = useNavigate();
 
   const handleBack = () => {
-    console.log("clicked");
-    navigate("/");
+   
+    if (backTo && backTo !== "AUTO") {
+      navigate(backTo);
+      return;
+    }
+
+    // Professional safe back logic
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -19,9 +29,9 @@ export default function PageHeader({
       {showBack && (
         <button
           onClick={handleBack}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition"
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 transition"
         >
-           <MdArrowBackIosNew size={20} />
+          <MdArrowBackIosNew size={20} />
         </button>
       )}
 

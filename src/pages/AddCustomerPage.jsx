@@ -38,7 +38,7 @@ export default function AddCustomerPage() {
 
   return (
     <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
-      <PageHeader title="Add Customers" backTo="/"></PageHeader>
+      <PageHeader title="Add Customers" backTo="AUTO"></PageHeader>
       <ProfileAndImportSection></ProfileAndImportSection>
       <AddCustomerForm   
               name={name}

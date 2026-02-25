@@ -9,7 +9,7 @@ import Header from '../assets/Components/Common/Header'
 export default function Customer() {
   return (
     <div className='max-w-[380px] mx-auto w-full pb-24'>
-          <Header title="Customers" backTo="/"></Header>
+          <Header title="Customers" backTo="AUTO"></Header>
            <BalanceSummary></BalanceSummary>
            <Search_Sort></Search_Sort>
            <Customer_list></Customer_list>
