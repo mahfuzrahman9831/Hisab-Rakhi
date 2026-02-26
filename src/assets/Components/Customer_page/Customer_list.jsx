@@ -3,8 +3,6 @@ import { useCustomers } from "../../../Context/CustomerContext";
 import { MdChevronRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-
-
 function timeAgo(date) {
   if (!date) return "Just now";
 
@@ -71,7 +69,7 @@ export default function Customer_list() {
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <span className="text-[15px] font-medium text-gray-800">
                 ৳{customer.balance}
               </span>
@@ -80,10 +78,25 @@ export default function Customer_list() {
                 onClick={() => navigate(`/customer/${customer.id}`)}
                 className="text-gray-400 text-xl cursor-pointer"
               />
+            </div> */}
+            <div className="flex items-center gap-2">
+              <span
+                className={`text-[15px] font-medium ${
+                  customer.balance >= 0
+                    ? "text-red-600" // Positive → Red
+                    : "text-green-600" // Negative → Green
+                }`}
+              >
+                ৳{Math.abs(customer.balance)}
+              </span>
+
+              <MdChevronRight
+                onClick={() => navigate(`/customer/${customer.id}`)}
+                className="text-gray-400 text-xl cursor-pointer"
+              />
             </div>
-             </div>
+          </div>
         ))}
     </div>
-    
   );
-};
+}

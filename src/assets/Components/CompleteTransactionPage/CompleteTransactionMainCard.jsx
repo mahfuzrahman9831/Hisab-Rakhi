@@ -1,15 +1,47 @@
-import React from 'react';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { useCustomers } from "../../../Context/CustomerContext";
 
-const DetailRow = ({ label, value, colorClass = "text-gray-700", isBold = false }) => (
+const DetailRow = ({
+  label,
+  value,
+  colorClass = "text-gray-700",
+  isBold = false,
+}) => (
   <div className="flex justify-between items-center py-1">
     <span className="text-gray-600 font-medium">{label}</span>
-    <span className={`${isBold ? 'font-bold' : 'font-semibold'} ${colorClass} font-sans`}>
+    <span
+      className={`${isBold ? "font-bold" : "font-semibold"} ${colorClass} font-sans`}
+    >
       {value}
     </span>
   </div>
 );
 
 const TransactionSuccessCard = () => {
+  // ✅ Hook inside component
+  const location = useLocation();
+  const { customers } = useCustomers();
+
+  const {
+    customerId,
+    sell = 0,
+    buy = 0,
+    previousBalance = 0,
+    currentBalance = 0,
+  } = location.state || {};
+
+  const customer = customers.find(
+    (c) => c.id === Number(customerId)
+  );
+
+  const getInitials = (name) => {
+    if (!name) return "";
+    const parts = name.trim().split(" ");
+    if (parts.length === 1) return parts[0][0].toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+
   return (
     <div className="w-full bg-white rounded-[2.5rem] pt-12 pb-8 px-6 shadow-sm border border-gray-100">
       <h1 className="text-xl font-bold text-center mb-8 text-gray-800">
@@ -20,23 +52,47 @@ const TransactionSuccessCard = () => {
         {/* User Info */}
         <div className="flex items-center space-x-3 border-b border-gray-100 pb-4">
           <div className="w-12 h-12 rounded-full bg-[#005a9e] flex items-center justify-center text-white font-bold text-lg">
-            AR
+            {getInitials(customer?.name)}
           </div>
           <div>
-            <div className="font-bold text-gray-800 leading-tight">abdur razzak vai</div>
-            <div className="text-xs text-gray-400 font-sans">+8801672214141</div>
+            <div className="font-bold text-gray-800 leading-tight">
+              {customer?.name}
+            </div>
+            <div className="text-xs text-gray-400 font-sans">
+              {customer?.phone}
+            </div>
           </div>
         </div>
 
         {/* Table Details */}
         <div className="space-y-3">
-          <DetailRow label="পূর্বের দেবো" value="১১,৯৩১.০০" />
-          <DetailRow label="দিলাম" value="১.০০" colorClass="text-rose-500" isBold />
-          <DetailRow label="পেলাম" value="০.০০" colorClass="text-[#00a65a]" isBold />
-          
+          <DetailRow
+            label="পূর্বের দেবো"
+            value={previousBalance.toLocaleString("bn-BD")}
+          />
+
+          <DetailRow
+            label="দিলাম"
+            value={sell.toLocaleString("bn-BD")}
+            colorClass="text-rose-500"
+            isBold
+          />
+
+          <DetailRow
+            label="পেলাম"
+            value={buy.toLocaleString("bn-BD")}
+            colorClass="text-[#00a65a]"
+            isBold
+          />
+
           <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
-            <span className="text-gray-700 font-bold">বর্তমান দেবো</span>
-            <span className="font-bold text-[#005a9e] text-xl font-sans">১১,৯৩০.০০</span>
+            <span className="text-gray-700 font-bold">
+              বর্তমান দেবো
+            </span>
+
+            <span className="font-bold text-[#005a9e] text-xl font-sans">
+              {currentBalance.toLocaleString("bn-BD")}
+            </span>
           </div>
         </div>
       </div>
