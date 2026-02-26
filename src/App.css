@@ -40,3 +40,50 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.success-circle {
+  width: 64px;
+  height: 64px;
+  background: #16a34a; /* green-600 */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #f4f7f6;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: pop 0.4s ease forwards;
+}
+
+.success-check {
+  width: 36px;
+  height: 36px;
+}
+
+.success-check-path {
+  stroke: white;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: draw 0.5s ease 0.4s forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

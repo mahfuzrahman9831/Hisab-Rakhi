@@ -2,40 +2,52 @@ import React from "react";
 import ShareButton from "./ShareButton";
 import TransactionSuccessCard from "./CompleteTransactionMainCard";
 import PageHeader from "../Common/Header";
+import { IoClose } from "react-icons/io5";
 
 const TransactionSuccess = () => {
   return (
-    <div className="max-w-[380px] mx-auto w-full pb-24">
-      <PageHeader title="Transaction Complete" backTo="AUTO"> </PageHeader>
-      <div className="bg-[#f4f7f6] text-gray-800 min-h-screen flex flex-col items-center justify-start font-['Hind_Siliguri',_sans-serif]">
-        <div className="w-full h-8 bg-transparent"></div>
+   <div className="max-w-[380px] mx-auto h-screen overflow-hidden bg-[#f4f7f6] text-gray-800 font-['Hind_Siliguri',_sans-serif] flex flex-col">
 
-        <div className="relative w-full max-w-md px-4 flex flex-col items-center">
-          {/* Close Button */}
-          <div className="w-full flex justify-end pt-2 pr-2 mb-4">
-            <button className="bg-gray-200 p-1.5 rounded-full hover:bg-gray-300 transition-colors">
-              <span className="material-icons text-gray-500 text-xl leading-none">
-                close
-              </span>
-            </button>
-          </div>
+      <PageHeader title="Transaction Complete" backTo="AUTO" />
 
-          {/* Success Check Icon */}
-          <div className="z-10 -mb-8">
-            <div className="bg-[#00a65a] w-16 h-16 rounded-full flex items-center justify-center border-4 border-[#f4f7f6] shadow-lg">
-              <span className="material-icons text-white text-4xl">check</span>
-            </div>
-          </div>
+      <div className="flex-1 flex flex-col items-center px-4 relative">
 
-          {/* Main Card Component */}
-          <TransactionSuccessCard />
-
-          {/* Share Section Component */}
-          <ShareButton />
-
-          {/* Bottom Indicator (Mobile Home Bar style) */}
-          <div className="w-32 h-1.5 bg-gray-300 rounded-full mb-6 mt-4"></div>
+        {/* Close Button */}
+        <div className="w-full flex justify-end pt-4">
+          <button className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 active:scale-90 transition-all duration-200">
+            <IoClose className="text-gray-500 text-2xl" />
+          </button>
         </div>
+
+        {/* Success Check */}
+        <div className="z-10 -mb-8 mt-4">
+          <div className="success-circle">
+            <svg className="success-check" viewBox="0 0 52 52">
+              <circle
+                className="success-circle-bg"
+                cx="26"
+                cy="26"
+                r="25"
+                fill="none"
+              />
+              <path
+                className="success-check-path"
+                fill="none"
+                d="M14 27l7 7 16-16"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* Main Card */}
+        <TransactionSuccessCard />
+
+        {/* Share Section */}
+        <ShareButton />
+
+        {/* Bottom Home Bar */}
+        <div className="absolute bottom-4 w-32 h-1.5 bg-gray-300 rounded-full"></div>
+
       </div>
     </div>
   );
