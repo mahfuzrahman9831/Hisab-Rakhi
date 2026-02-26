@@ -7,6 +7,7 @@ import AddCustomerPage from "./pages/AddCustomerPage";
 import Customer from "./pages/Customer";
 import Report from "./pages/Report";
 import CustomerDetails from "./pages/CustomerDetails";
+import CompleteTransactionPage from "./assets/Components/CompleteTransactionPage/CompleteTransactionPage";
 
 
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/add-customer" element={<AddCustomerPage />} />
             <Route path="/customer/:id" element={<CustomerDetails />} />
+            <Route path="/transaction-complete" element={<CompleteTransactionPage />} />
           </Routes>
         </div>
 
