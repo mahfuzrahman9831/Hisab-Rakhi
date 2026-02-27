@@ -25,13 +25,14 @@ export default function AddCustomerPage() {
     }
 
     const newCustomer = {
-      id: Date.now(),
-      name,
-      phone,
-      address,
-      balance: 0,
-    };
-
+  id: Date.now(),
+  name,
+  phone,
+  address,
+  balance: 0,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(), // 🔥 এটা খুব জরুরি
+};
     addCustomer(newCustomer);
     navigate("/customer");
   };
