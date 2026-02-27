@@ -3,18 +3,22 @@ import ShareButton from "./ShareButton";
 import TransactionSuccessCard from "./CompleteTransactionMainCard";
 import PageHeader from "../Common/Header";
 import { IoClose } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const TransactionSuccess = () => {
-  return (
-   <div className="max-w-[380px] mx-auto h-screen overflow-hidden bg-[#f4f7f6] text-gray-800 font-['Hind_Siliguri',_sans-serif] flex flex-col">
+  const navigate = useNavigate();
 
+  return (
+    <div className="max-w-[380px] mx-auto h-screen overflow-hidden bg-[#f4f7f6] text-gray-800 font-['Hind_Siliguri',_sans-serif] flex flex-col">
       <PageHeader title="Transaction Complete" backTo="AUTO" />
 
       <div className="flex-1 flex flex-col items-center px-4 relative">
-
         {/* Close Button */}
         <div className="w-full flex justify-end pt-4">
-          <button className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 active:scale-90 transition-all duration-200">
+          <button
+            onClick={() => navigate("/customer")}
+            className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 active:scale-90 transition-all duration-200"
+          >
             <IoClose className="text-gray-500 text-2xl" />
           </button>
         </div>
@@ -47,7 +51,6 @@ const TransactionSuccess = () => {
 
         {/* Bottom Home Bar */}
         <div className="absolute bottom-4 w-32 h-1.5 bg-gray-300 rounded-full"></div>
-
       </div>
     </div>
   );

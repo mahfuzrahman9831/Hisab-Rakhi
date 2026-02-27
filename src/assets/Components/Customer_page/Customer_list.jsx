@@ -34,7 +34,6 @@ export default function Customer_list() {
     if (!name) return "";
 
     const parts = name.trim().split(" ");
-
     if (parts.length === 1) {
       return parts[0][0].toUpperCase();
     }
@@ -46,19 +45,23 @@ export default function Customer_list() {
   }
 
   const { customers } = useCustomers();
-
   const navigate = useNavigate();
 
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-sm">
       {customers
         .slice()
-        .reverse()
+        .sort((a, b) => {
+          const dateA = new Date(a.updatedAt || a.createdAt);
+          const dateB = new Date(b.updatedAt || b.createdAt);
+          return dateB - dateA; // newest first
+        })
         .map((customer) => (
           <div
             key={customer.id}
             className="flex items-center justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition"
           >
+            {/* Left Side */}
             <div className="flex flex-col items-start justify-center">
               <span className="text-[15px] font-medium text-gray-800 leading-tight">
                 {customer.name}
@@ -69,25 +72,21 @@ export default function Customer_list() {
               </span>
             </div>
 
-            {/* <div className="flex items-center gap-2">
-              <span className="text-[15px] font-medium text-gray-800">
-                ৳{customer.balance}
-              </span>
-
-              <MdChevronRight
-                onClick={() => navigate(`/customer/${customer.id}`)}
-                className="text-gray-400 text-xl cursor-pointer"
-              />
-            </div> */}
+            {/* Right Side Amount */}
             <div className="flex items-center gap-2">
               <span
-                className={`text-[15px] font-medium ${
-                  customer.balance >= 0
-                    ? "text-red-600" // Positive → Red
-                    : "text-green-600" // Negative → Green
+                className={`text-[15px] font-semibold ${
+                  customer.balance > 0
+                    ? "text-red-600" // Sell → You'll Get
+                    : customer.balance < 0
+                      ? "text-green-600" // Buy → You'll Give
+                      : "text-gray-400" // Zero
                 }`}
               >
-                ৳{Math.abs(customer.balance)}
+                {Math.abs(customer.balance).toLocaleString("en-BD", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </span>
 
               <MdChevronRight

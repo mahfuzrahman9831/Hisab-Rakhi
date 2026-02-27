@@ -37,11 +37,26 @@ export default function Customer_Name({ customer }) {
         </div>
 
         {/* Right Side Balance */}
+        {/* Right Side Balance */}
         <div className="text-right">
           <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400">
             Current Balance
           </p>
-          <p className="text-xl font-bold text-red-600">৳{customer.balance}</p>
+
+          <p
+            className={`text-xl font-bold ${
+              customer.balance > 0
+                ? "text-red-600" // You'll Get
+                : customer.balance < 0
+                  ? "text-green-600" // You'll Give
+                  : "text-gray-400"
+            }`}
+          >
+            {Math.abs(customer.balance).toLocaleString("en-BD", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </p>
         </div>
       </div>
 

@@ -38,8 +38,8 @@ const handleSubmit = () => {
 
   const previousBalance = customer?.balance || 0;
 
-  const currentBalance =
-    previousBalance - sellAmount + buyAmount;
+ const currentBalance =
+  previousBalance + sellAmount - buyAmount;
 
   const transaction = {
     id: Date.now(),
@@ -55,13 +55,17 @@ const handleSubmit = () => {
   addTransaction(transaction);
 
   // Update customer balance
-  setCustomers(prev =>
-    prev.map(c =>
-      c.id === customer.id
-        ? { ...c, balance: currentBalance }
-        : c
-    )
-  );
+ setCustomers(prev =>
+  prev.map(c =>
+    c.id === customer.id
+      ? {
+          ...c,
+          balance: currentBalance,
+          updatedAt: new Date().toISOString(), // 🔥 important
+        }
+      : c
+  )
+);
 
   // Reset form
   setSell("");

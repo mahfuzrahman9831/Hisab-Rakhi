@@ -1,4 +1,19 @@
+import { useCustomers } from "../../../Context/CustomerContext";
+
 export default function BalanceSummary() {
+
+  const { customers } = useCustomers();
+
+  // 🔴 Total You'll Get (positive balances)
+  const totalGet = customers
+    .filter(c => c.balance > 0)
+    .reduce((sum, c) => sum + c.balance, 0);
+
+  // 🟢 Total You'll Give (negative balances)
+  const totalGive = customers
+    .filter(c => c.balance < 0)
+    .reduce((sum, c) => sum + Math.abs(c.balance), 0);
+
   return (
     <div className="flex gap-3 px-4 pb-4 pt-4">
 
@@ -8,7 +23,7 @@ export default function BalanceSummary() {
           Total You'll Get
         </p>
         <p className="text-lg font-bold text-red-600 leading-tight">
-          ৳45,200
+          ৳{totalGet.toLocaleString("en-BD")}
         </p>
       </div>
 
@@ -18,7 +33,7 @@ export default function BalanceSummary() {
           Total You'll Give
         </p>
         <p className="text-lg font-bold text-green-600 leading-tight">
-          ৳12,800
+          ৳{totalGive.toLocaleString("en-BD")}
         </p>
       </div>
 

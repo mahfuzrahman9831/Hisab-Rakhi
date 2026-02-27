@@ -19,7 +19,6 @@ const DetailRow = ({
 );
 
 const TransactionSuccessCard = () => {
-  // ✅ Hook inside component
   const location = useLocation();
   const { customers } = useCustomers();
 
@@ -31,9 +30,7 @@ const TransactionSuccessCard = () => {
     currentBalance = 0,
   } = location.state || {};
 
-  const customer = customers.find(
-    (c) => c.id === Number(customerId)
-  );
+  const customer = customers.find((c) => c.id === Number(customerId));
 
   const getInitials = (name) => {
     if (!name) return "";
@@ -45,7 +42,7 @@ const TransactionSuccessCard = () => {
   return (
     <div className="w-full bg-white rounded-[2.5rem] pt-12 pb-8 px-6 shadow-sm border border-gray-100">
       <h1 className="text-xl font-bold text-center mb-8 text-gray-800">
-        লেনদেনটি রেকর্ড করা হয়েছে।
+        Transaction recorded.
       </h1>
 
       <div className="bg-[#f8faf9] rounded-2xl p-5 space-y-4 border border-gray-50">
@@ -67,32 +64,65 @@ const TransactionSuccessCard = () => {
         {/* Table Details */}
         <div className="space-y-3">
           <DetailRow
-            label="পূর্বের দেবো"
-            value={previousBalance.toLocaleString("bn-BD")}
+            label="Previous Balance"
+            value={Math.abs(previousBalance).toLocaleString("en-BD", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           />
 
-          <DetailRow
-            label="দিলাম"
-            value={sell.toLocaleString("bn-BD")}
-            colorClass="text-rose-500"
-            isBold
-          />
+          {/* ✅ Show Sell only if entered */}
+          {sell > 0 && (
+            <DetailRow
+              label="Sell / দিলাম"
+              value={sell.toLocaleString("en-BD")}
+              colorClass="text-rose-500"
+              isBold
+            />
+          )}
 
-          <DetailRow
-            label="পেলাম"
-            value={buy.toLocaleString("bn-BD")}
-            colorClass="text-[#00a65a]"
-            isBold
-          />
+          {/* ✅ Show Buy only if entered */}
+          {buy > 0 && (
+            <DetailRow
+              label="Buy / পেলাম"
+              value={buy.toLocaleString("en-BD")}
+              colorClass="text-[#00a65a]"
+              isBold
+            />
+          )}
 
           <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
-            <span className="text-gray-700 font-bold">
-              বর্তমান দেবো
-            </span>
+            <span className="text-gray-700 font-bold">Current Balance</span>
 
-            <span className="font-bold text-[#005a9e] text-xl font-sans">
-              {currentBalance.toLocaleString("bn-BD")}
-            </span>
+            <div className="flex flex-col items-end leading-tight">
+              <span
+                className={`font-bold text-xl font-sans ${
+                  currentBalance > 0
+                    ? "text-red-600"
+                    : currentBalance < 0
+                      ? "text-green-600"
+                      : "text-gray-400"
+                }`}
+              >
+                ৳{Math.abs(currentBalance).toLocaleString("en-BD")}
+              </span>
+
+              <span
+                className={`text-[12px] font-semibold ${
+                  currentBalance > 0
+                    ? "text-red-500"
+                    : currentBalance < 0
+                      ? "text-green-500"
+                      : "text-gray-400"
+                }`}
+              >
+                {currentBalance > 0
+                  ? "You'll Get"
+                  : currentBalance < 0
+                    ? "You'll Give"
+                    : "Settled"}
+              </span>
+            </div>
           </div>
         </div>
       </div>
