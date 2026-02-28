@@ -8,6 +8,8 @@ import Customer from "./pages/Customer";
 import Report from "./pages/Report";
 import CustomerDetails from "./pages/CustomerDetails";
 import CompleteTransactionPage from "./assets/Components/CompleteTransactionPage/CompleteTransactionPage";
+import CustomerTransactionReportNew from "./assets/Components/CustomerTransactionReportNew/CustomerTransactionReportNew";
+import EditCustomerPage from "./assets/Components/EditCustomer/EditCustomerPage";
 
 
 
@@ -32,6 +34,8 @@ function App() {
             <Route path="/add-customer" element={<AddCustomerPage />} />
             <Route path="/customer/:id" element={<CustomerDetails />} />
             <Route path="/transaction-complete" element={<CompleteTransactionPage />} />
+            <Route path="/customer/:id/report" element={<CustomerTransactionReportNew />}/>
+            <Route path="/customer/:id/edit" element={<EditCustomerPage />} />
           </Routes>
         </div>
 

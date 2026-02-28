@@ -48,8 +48,8 @@ export default function CustomerDetails() {
         backTo="AUTO"
         showMenu={true}
           onDelete={() => console.log("Delete")}
-          onEdit={() => console.log("Edit")}
-          onReport={() => console.log("Report")}
+          onEdit={() => navigate(`/customer/${customer.id}/edit`)}
+          onReport={() => navigate(`/customer/${customer.id}/report`)}
         
       />
 
