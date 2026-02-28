@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Premium Ledger - Light Mode</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+Bengali:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#10B981", // Emerald green for balance
+              "background-light": "#F3F4F6",
+              "background-dark": "#0F172A",
+              "card-dark": "#1E293B",
+              "accent-red": "#EF4444",
+            },
+            fontFamily: {
+              display: ["Inter", "Noto Sans Bengali", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "12px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", "Noto Sans Bengali", sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .transaction-row:last-child {
+        border-bottom: none;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen"
+  >
+    <div
+      class="max-w-md mx-auto min-h-screen bg-white dark:bg-slate-900 shadow-xl overflow-hidden flex flex-col"
+    >
+      <div class="pt-12 px-4 pb-4">
+        <div
+          class="bg-slate-800 dark:bg-slate-950 rounded-3xl p-6 shadow-2xl relative overflow-hidden"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-slate-700/50 to-transparent pointer-events-none"
+          ></div>
+          <div class="relative z-10">
+            <div class="flex items-center gap-4 mb-8">
+              <div
+                class="w-14 h-14 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-xl border-2 border-slate-500/30"
+              >
+                AR
+              </div>
+              <div>
+                <h1 class="text-white text-xl font-bold tracking-tight">
+                  আবদুর রাজ্জাক
+                </h1>
+                <span
+                  class="inline-block mt-1 px-3 py-0.5 bg-slate-700 text-slate-400 text-[10px] font-bold uppercase tracking-widest rounded-full border border-slate-600"
+                >
+                  VIP মেম্বার
+                </span>
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                class="text-primary text-4xl font-bold flex items-center justify-center gap-2"
+              >
+                <span class="text-2xl font-semibold">₹</span>
+                11,930.00
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="px-4 mb-2">
+        <div
+          class="bg-slate-800 dark:bg-slate-950 rounded-2xl p-3 flex items-center justify-between shadow-md"
+        >
+          <div
+            class="flex items-center gap-2 px-2 border-r border-slate-700 pr-4"
+          >
+            <span class="material-icons-round text-slate-400 text-xl"
+              >notifications_active</span
+            >
+            <span class="text-white text-sm font-medium">ডিউ খোর</span>
+          </div>
+          <div class="flex items-center gap-3 pl-2">
+            <div class="flex items-center gap-1.5">
+              <span class="material-icons-round text-slate-400 text-xl"
+                >file_download</span
+              >
+              <span class="text-white text-sm font-medium">রিপোর্ট শেয়ার</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input checked="" class="sr-only peer" type="checkbox" value="" />
+              <div
+                class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"
+              ></div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="px-6 py-2 flex justify-between items-center text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 mt-2"
+      >
+        <span>Transaction details</span>
+        <span>Amount</span>
+      </div>
+      <div class="flex-1 overflow-y-auto hide-scrollbar">
+        <div
+          class="px-4 py-4 border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-1.5"
+              >
+                <img
+                  alt="UPI Logo"
+                  class="w-full h-full object-contain"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqiBCEnClXssDDsi7_1QrE-lVIOgDg5Wm2_diNDAoPZ-SI2yJjFWDAOI7AisD6oHZRbec_Im0JsdkG_8_symPmUYJhrxSw5_OGCESA7_ZY04hF9DM26A3zwf3v3Pe6xCKSPxdqtvhyq3XPc9LoixyneFxmtFr1mdnaaD2Zjfrfo30V56M46DzVUglhrITB30OkooXapDJdEjxBOq3Bmq4mHjiAWe0CVkeENPEfnx9SzvyXaEtgOJVlNhfXL17WCVFSJQsjsI4s6FRd"
+                />
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100">
+                  Fund Transfer
+                </h3>
+                <p
+                  class="text-[11px] font-medium text-slate-500 dark:text-slate-400"
+                >
+                  UPI
+                </p>
+              </div>
+            </div>
+            <div class="text-right flex items-center gap-2">
+              <span class="text-accent-red font-bold text-base">₹ 1.50</span>
+              <span class="material-icons-round text-accent-red text-xl"
+                >remove_circle</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center text-xs text-slate-400 dark:text-slate-500 mt-1"
+          >
+            <span class="font-medium">03/03/2023</span>
+            <span class="font-medium">Balance: ₹ 0.00</span>
+          </div>
+        </div>
+        <div
+          class="px-4 py-4 border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-1.5"
+              >
+                <img
+                  alt="UPI Logo"
+                  class="w-full h-full object-contain"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfui5HCD5LXkUIziVNkhNYbo-42aYOaF9H_oAhg0FsNYwmCAxXRYySWGQaQK_Qa99Zce_KlGLVgTQw5fuTXi3JMfnig-MV_zhftj9pMuNjmNLU4lvndMkt7GAIBePqY7T6lox_WPrnBpO1aw_JKs04cjQT5cz3B50VrhUpluNZE8b_pC5_rW0BJtomtTIzPG_oLSziV4VAE9dDXmPUPwffgurvH4njA2aV2d9LqT6Q_NsWPZoGrBntG4l-R-McWGXlUOIfpGKVN2X_"
+                />
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100">
+                  Fund Transfer
+                </h3>
+                <p
+                  class="text-[11px] font-medium text-slate-500 dark:text-slate-400"
+                >
+                  UPI
+                </p>
+              </div>
+            </div>
+            <div class="text-right flex items-center gap-2">
+              <span class="text-primary font-bold text-base">₹ 1.00</span>
+              <span class="material-icons-round text-primary text-xl"
+                >add_circle</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center text-xs text-slate-400 dark:text-slate-500 mt-1"
+          >
+            <span class="font-medium">03/03/2023</span>
+            <span class="font-medium">Balance: ₹ 1.50</span>
+          </div>
+        </div>
+        <div
+          class="px-4 py-4 border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-1.5"
+              >
+                <img
+                  alt="UPI Logo"
+                  class="w-full h-full object-contain"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwvUS4DUE5sojw_D3REpBgozuZjqQTrSnfGNLSbSVWkApMR0LB44Hg3tmZosrp_zFt2XO_jUzqHir1Xo4nT01I_wOj9-rL6AHEYmIPZ17COjgPb0fWRY5RPlPXjnY5vPhxWQWgsXrK3yCpWsiiGy-fUC8qH6qsC5FB95v0NXrTi-NgsQnJMFzQX4c1L7CPn9KdkthM8K8MUACAh_swWmHvq6FCgLqFSa2sMDrG7_G8PoQIN9JyLZ_CRRmhrdgnH9dVqOfh67_CmOwX"
+                />
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100">
+                  Fund Transfer
+                </h3>
+                <p
+                  class="text-[11px] font-medium text-slate-500 dark:text-slate-400"
+                >
+                  UPI
+                </p>
+              </div>
+            </div>
+            <div class="text-right flex items-center gap-2">
+              <span class="text-accent-red font-bold text-base"
+                >₹ 12,400.00</span
+              >
+              <span class="material-icons-round text-accent-red text-xl"
+                >remove_circle</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center text-xs text-slate-400 dark:text-slate-500 mt-1"
+          >
+            <span class="font-medium">01/02/2023</span>
+            <span class="font-medium">Balance: ₹ 0.50</span>
+          </div>
+        </div>
+        <div
+          class="px-4 py-4 border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-1.5"
+              >
+                <img
+                  alt="UPI Logo"
+                  class="w-full h-full object-contain"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUMftfe3xwIa3Cy02kus-Duau3OVYbn4VfcGZjqkegHZMz1XB8S1UYK6EHcblKom0DBjl3sAx4-CEvgQFfjGahpUUDLbMLvJwgb-w9_E-hm2DLj1-y4voEyDUhdLxsotRu7fWNu9H585rft-jAs2-nUzepgncOoPKY0Ee064RqgzlX8bntktRyPglOVGbZcdD4YhbYIUYbWQE0oRXZCjNFMQ_tLvZ_aVZk1dqiyCGdYAvY35zeSYKL2LBhcqiG65I2vKTcYOQQUXMQ"
+                />
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100">
+                  Fund Transfer
+                </h3>
+                <p
+                  class="text-[11px] font-medium text-slate-500 dark:text-slate-400"
+                >
+                  UPI
+                </p>
+              </div>
+            </div>
+            <div class="text-right flex items-center gap-2">
+              <span class="text-primary font-bold text-base">₹ 12,400.00</span>
+              <span class="material-icons-round text-primary text-xl"
+                >add_circle</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center text-xs text-slate-400 dark:text-slate-500 mt-1"
+          >
+            <span class="font-medium">01/02/2023</span>
+            <span class="font-medium">Balance: ₹ 12,400.50</span>
+          </div>
+        </div>
+        <div
+          class="px-4 py-4 border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center border border-pink-200 dark:border-pink-800/50"
+              >
+                <span class="material-icons-round text-pink-500 text-lg"
+                  >call_made</span
+                >
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100">
+                  Others
+                </h3>
+                <p
+                  class="text-[11px] font-medium text-slate-500 dark:text-slate-400"
+                >
+                  Cash/Bank
+                </p>
+              </div>
+            </div>
+            <div class="text-right flex items-center gap-2">
+              <span class="text-accent-red font-bold text-base">₹ 147.50</span>
+              <span class="material-icons-round text-accent-red text-xl"
+                >remove_circle</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center text-xs text-slate-400 dark:text-slate-500 mt-1"
+          >
+            <span class="font-medium">22/10/2022</span>
+            <span class="font-medium">Balance: ₹ 0.50</span>
+          </div>
+        </div>
+        <div
+          class="px-4 py-4 border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-1.5"
+              >
+                <img
+                  alt="UPI Logo"
+                  class="w-full h-full object-contain"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnJ-W7EG7GJFDQj3x9UJdk1-reAxlUQ8EH8VeimqHROEjDuXlt3VIfK-F4cscpIdlHYm52q0OC6wOH7bEuy5EUym4tI6uLncin9morT4hpr1vpUQ3JbjTAbeMxApDGcvMReh-9GjFGzzIyPHn-1DNrVL_0_RYpHq94WiQ2kFpUnc02Lzg_G6q6fAzsjWUyBqW8hTy1X4l4tIj347_L9e6u4R_iaMEwAwDZxzhCh0HXVdDPi9bF8Eaeju2veY3fYKYFC4hhzZlIcUMK"
+                />
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100">
+                  Fund Transfer
+                </h3>
+                <p
+                  class="text-[11px] font-medium text-slate-500 dark:text-slate-400"
+                >
+                  UPI
+                </p>
+              </div>
+            </div>
+            <div class="text-right flex items-center gap-2">
+              <span class="text-accent-red font-bold text-base"
+                >₹ 1,855.00</span
+              >
+              <span class="material-icons-round text-accent-red text-xl"
+                >remove_circle</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex justify-between items-center text-xs text-slate-400 dark:text-slate-500 mt-1"
+          >
+            <span class="font-medium">22/10/2022</span>
+            <span class="font-medium">Balance: ₹ 148.00</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-t border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-3 pb-8 flex justify-between items-center"
+      >
+        <button class="flex flex-col items-center gap-1 text-primary">
+          <span class="material-icons-round">receipt_long</span>
+          <span class="text-[10px] font-bold">Ledger</span>
+        </button>
+        <button
+          class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500"
+        >
+          <span class="material-icons-round">analytics</span>
+          <span class="text-[10px] font-bold">Stats</span>
+        </button>
+        <button
+          class="bg-primary text-white w-12 h-12 rounded-full shadow-lg shadow-primary/30 flex items-center justify-center -mt-8"
+        >
+          <span class="material-icons-round">add</span>
+        </button>
+        <button
+          class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500"
+        >
+          <span class="material-icons-round">groups</span>
+          <span class="text-[10px] font-bold">Customers</span>
+        </button>
+        <button
+          class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500"
+        >
+          <span class="material-icons-round">settings</span>
+          <span class="text-[10px] font-bold">Settings</span>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

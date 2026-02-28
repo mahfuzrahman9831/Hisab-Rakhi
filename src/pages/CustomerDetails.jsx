@@ -3,55 +3,74 @@ import Customer_Name from "../assets/Components/Transaction_Entry/Customer_Name"
 import Transaction_Form from "../assets/Components/Transaction_Entry/Transaction_Form";
 import { useParams } from "react-router-dom";
 import { useCustomers } from "../Context/CustomerContext";
+import { IoChevronBack, IoEllipsisVertical } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 
 
 export default function CustomerDetails() {
   const { id } = useParams();
   const { customers } = useCustomers();
- const customer = customers.find(c => c.id === Number(id));
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef();
+
+  const customer = customers.find(c => c.id === Number(id));
+
+     // Click outside close
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   if (!customer) {
     return (
-      <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
-        <PageHeader title="Customer Details" />
-        <p className="text-center mt-4">Customer not found</p>
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        Customer not found
       </div>
     );
   }
 
+
+
   return (
-    <>
-      <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
-        <PageHeader title={<span className="text-[15px] font-semibold">{customer.name}</span>} backTo="AUTO"></PageHeader>
-        <Customer_Name customer={customer}></Customer_Name>
-        <Transaction_Form></Transaction_Form>
+    <div className="flex flex-col h-full max-w-[380px] mx-auto bg-[#f3f4f6]">
 
-        {/* <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] pb-24">
-          <PageHeader title="Customer Details" />
+      {/* HEADER */}
+      <PageHeader
+        title={<span className="text-[15px] font-semibold">{customer.name}</span>}
+        backTo="AUTO"
+        showMenu={true}
+          onDelete={() => console.log("Delete")}
+          onEdit={() => console.log("Edit")}
+          onReport={() => console.log("Report")}
+        
+      />
 
-          <div className="p-4 space-y-4 bg-white mt-4 rounded-xl shadow-sm">
-            <div>
-              <p className="text-xs text-gray-400">Name</p>
-              <p className="font-semibold">{customer.name}</p>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-400">Phone</p>
-              <p>{customer.phone}</p>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-400">Address</p>
-              <p>{customer.address || "No address"}</p>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-400">Balance</p>
-              <p className="text-lg font-bold">৳ {customer.balance}</p>
-            </div>
-          </div>
-        </div> */}
+      {/* CONTENT (NO SCROLL) */}
+      <div className="flex-1 overflow-y-auto px-4 pb-20">
+        <Customer_Name customer={customer} />
+        <Transaction_Form />
       </div>
-    </>
+
+      {/* FIXED SUBMIT BUTTON */}
+      <div className="sticky bottom-16 px-4 pb-4 bg-[#f3f4f6]">
+        <button
+          onClick={() => {
+            // এখানে handleSubmit call করবে
+          }}
+          className="w-full bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-all text-white h-14 rounded-xl font-bold text-lg shadow-lg"
+        >
+          Submit
+        </button>
+      </div>
+
+    </div>
   );
 }

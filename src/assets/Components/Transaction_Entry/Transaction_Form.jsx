@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 
 
-export default function Transaction_Form() {
+export default function Transaction_Form({onSubmit}) {
   const navigate = useNavigate();
   const [sell, setSell] = useState("");
   const [buy, setBuy] = useState("");
@@ -179,13 +179,13 @@ const handleSubmit = () => {
       )}
 
       {/* Submit */}
-      <button
+      {/* <button
         onClick={handleSubmit}
         className="w-full bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-all text-white h-14 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-green-600/20"
       >
         <FaUserPlus size={18} />
         Submit
-      </button>
+      </button> */}
     </main>
   );
 }
