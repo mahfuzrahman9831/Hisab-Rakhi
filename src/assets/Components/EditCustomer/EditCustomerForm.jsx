@@ -82,28 +82,7 @@ export default function EditCustomerMain() {
           </div>
         </div>
 
-        {/* Email */}
-        <div className="space-y-2">
-          <label
-            htmlFor="email-address"
-            className="block text-sm font-semibold text-gray-700 ml-1"
-          >
-            Email Address
-          </label>
-
-          <div className="relative group">
-            <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors" />
-
-            <input
-              id="email-address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@company.com"
-              className="w-full rounded-xl border border-gray-200 bg-white pl-11 pr-4 py-4 text-gray-900 placeholder:text-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600/30 transition-all outline-none"
-            />
-          </div>
-        </div>
+       
 
       </form>
     </main>

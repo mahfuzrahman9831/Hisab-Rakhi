@@ -1,8 +1,8 @@
 import { IoCheckmarkCircle } from "react-icons/io5";
 
-export default function UpdateCustomerFooter({ onUpdate, onRemove }) {
+export default function UpdateCustomerFooter({ onUpdate }) {
   return (
-    <footer className="p-6 bg-white border-t border-gray-200">
+    <footer className="p-6 bg-white border-t border-gray-200 justify-end">
 
       <div className="max-w-md mx-auto">
 
@@ -15,13 +15,7 @@ export default function UpdateCustomerFooter({ onUpdate, onRemove }) {
           Update Details
         </button>
 
-        {/* Remove Button */}
-        <button
-          onClick={onRemove}
-          className="w-full mt-3 py-3 text-gray-500 font-medium text-sm hover:text-red-500 transition-colors"
-        >
-          Remove Customer
-        </button>
+       
 
       </div>
 

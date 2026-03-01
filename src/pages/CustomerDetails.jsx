@@ -40,14 +40,14 @@ export default function CustomerDetails() {
 
 
   return (
-    <div className="flex flex-col h-full max-w-[380px] mx-auto bg-[#f3f4f6]">
+    <div className="relative flex flex-col h-full max-w-[380px] mx-auto bg-[#f3f4f6]">
 
       {/* HEADER */}
       <PageHeader
         title={<span className="text-[15px] font-semibold">{customer.name}</span>}
         backTo="AUTO"
         showMenu={true}
-          onDelete={() => console.log("Delete")}
+          onDelete={() => navigate(`/customer/${customer.id}/delete`)}
           onEdit={() => navigate(`/customer/${customer.id}/edit`)}
           onReport={() => navigate(`/customer/${customer.id}/report`)}
         

@@ -10,7 +10,7 @@ import CustomerDetails from "./pages/CustomerDetails";
 import CompleteTransactionPage from "./assets/Components/CompleteTransactionPage/CompleteTransactionPage";
 import CustomerTransactionReportNew from "./assets/Components/CustomerTransactionReportNew/CustomerTransactionReportNew";
 import EditCustomerPage from "./assets/Components/EditCustomer/EditCustomerPage";
-
+import DeleteCustomerPage from "../src//assets/Components/DeleteCustomerPage/DeleteCustomerPage";
 
 
 
@@ -36,6 +36,7 @@ function App() {
             <Route path="/transaction-complete" element={<CompleteTransactionPage />} />
             <Route path="/customer/:id/report" element={<CustomerTransactionReportNew />}/>
             <Route path="/customer/:id/edit" element={<EditCustomerPage />} />
+            <Route path="/customer/:id/delete" element={<DeleteCustomerPage />} />
           </Routes>
         </div>
 
