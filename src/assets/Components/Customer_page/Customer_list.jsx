@@ -29,6 +29,21 @@ function timeAgo(date) {
 
 export default function Customer_list() {
 
+  function getInitials(name) {
+  if (!name) return "";
+
+  const parts = name.trim().split(" ");
+
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase();
+  }
+
+  const first = parts[0][0];
+  const last = parts[parts.length - 1][0];
+
+  return (first + last).toUpperCase();
+}
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const { customers } = useCustomers();
@@ -91,15 +106,35 @@ export default function Customer_list() {
             className="flex items-center justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 active:scale-[0.995] transition-all cursor-pointer"
           >
             {/* Left */}
-            <div className="flex flex-col items-start justify-center">
-              <span className="text-[15px] font-medium text-gray-800 leading-tight">
-                {customer.name}
-              </span>
+           <div className="flex items-center gap-3">
 
-              <span className="text-[11px] text-gray-400 mt-0.5 tracking-wide">
-                {timeAgo(customer.updatedAt || customer.createdAt)}
-              </span>
-            </div>
+  {/* Avatar */}
+  <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+    {customer.profileImage ? (
+      <img
+        src={customer.profileImage}
+        alt="Profile"
+        className="w-full h-full object-cover rounded-full"
+      />
+    ) : (
+      <span className="text-green-700 font-semibold text-sm">
+        {getInitials(customer.name)}
+      </span>
+    )}
+  </div>
+
+  {/* Name + Time */}
+  <div className="flex flex-col items-start justify-center">
+    <span className="text-[15px] font-medium text-gray-800 leading-tight">
+      {customer.name}
+    </span>
+
+    <span className="text-[11px] text-gray-400 mt-0.5 tracking-wide">
+      {timeAgo(customer.updatedAt || customer.createdAt)}
+    </span>
+  </div>
+
+</div>
 
             {/* Right */}
             <div className="flex items-center gap-2">

@@ -1,6 +1,27 @@
-import { FiUser, FiCamera, FiUserPlus } from "react-icons/fi";
+import { FiUser, FiCamera, FiUserPlus, FiX } from "react-icons/fi";
 
-export default function ProfileAndImportSection() {
+export default function ProfileAndImportSection({
+  profileImage,
+  setProfileImage,
+}) {
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setProfileImage(reader.result); // base64 save
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setProfileImage(null);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center pt-4 pb-2 space-y-6 bg-white">
 
@@ -11,15 +32,45 @@ export default function ProfileAndImportSection() {
 
           {/* Avatar */}
           <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center border-4 border-white shadow-sm overflow-hidden">
-            <FiUser className="text-gray-400 text-5xl" />
+
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <FiUser className="text-gray-400 text-5xl" />
+            )}
+
           </div>
 
+          {/* Hidden File Input */}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            id="profileUpload"
+            className="hidden"
+          />
+
           {/* Camera Button */}
-          <button
-            className="absolute bottom-0 right-0 bg-green-600 text-white p-2 rounded-full shadow-lg border-2 border-white flex items-center justify-center active:scale-90 transition-transform"
+          <label
+            htmlFor="profileUpload"
+            className="absolute bottom-0 right-0 bg-green-600 text-white p-2 rounded-full shadow-lg border-2 border-white flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
           >
             <FiCamera size={18} />
-          </button>
+          </label>
+
+          {/* Remove Button (if image exists) */}
+          {profileImage && (
+            <button
+              onClick={handleRemoveImage}
+              className="absolute top-0 right-0 bg-red-500 text-white p-1.5 rounded-full border-2 border-white shadow-md"
+            >
+              <FiX size={14} />
+            </button>
+          )}
 
         </div>
 

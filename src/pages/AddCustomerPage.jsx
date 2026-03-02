@@ -14,6 +14,7 @@ export default function AddCustomerPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
 
   const handleSubmit = () => {
     console.log("Name:", name);
@@ -29,6 +30,7 @@ export default function AddCustomerPage() {
   name,
   phone,
   address,
+  profileImage,
   balance: 0,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(), // 🔥 এটা খুব জরুরি
@@ -40,7 +42,11 @@ export default function AddCustomerPage() {
   return (
     <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
       <PageHeader title="Add Customers" backTo="AUTO"></PageHeader>
-      <ProfileAndImportSection></ProfileAndImportSection>
+      <ProfileAndImportSection 
+      profileImage={profileImage}
+      setProfileImage={setProfileImage} >
+
+      </ProfileAndImportSection>
       <AddCustomerForm   
               name={name}
               setName={setName}
