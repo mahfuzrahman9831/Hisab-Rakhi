@@ -14,11 +14,15 @@ export default function EditCustomerPage() {
     (c) => c.id === Number(id)
   );
 
+
+
+
   // 🔥 Local State
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     address: "",
+    profileImage: null,
   });
 
   // ✅ Load customer data
@@ -28,6 +32,7 @@ export default function EditCustomerPage() {
         name: customer.name || "",
         phone: customer.phone || "",
         address: customer.address || "",
+        profileImage: customer.profileImage || null,
       });
     }
   }, [customer]);
@@ -36,12 +41,25 @@ export default function EditCustomerPage() {
     return <div>Customer not found</div>;
   }
 
+
+  const isChanged =
+  formData.name !== customer.name ||
+  formData.phone !== customer.phone ||
+  formData.address !== customer.address ||
+  formData.profileImage !== customer.profileImage;
+
+
+
+
   // ✅ Save Function
   const handleSave = () => {
     setCustomers((prev) =>
       prev.map((c) =>
         c.id === customer.id
-          ? { ...c, ...formData }
+          ? { ...c,
+              ...formData,
+              updatedAt: new Date().toISOString(),
+          }
           : c
       )
     );
@@ -59,7 +77,10 @@ export default function EditCustomerPage() {
         setFormData={setFormData}
       />
 
-      <UpdateCustomerFooter onSave={handleSave} />
+      <UpdateCustomerFooter 
+      onSave={handleSave}
+      disabled={!isChanged}
+       />
     </div>
   );
 }

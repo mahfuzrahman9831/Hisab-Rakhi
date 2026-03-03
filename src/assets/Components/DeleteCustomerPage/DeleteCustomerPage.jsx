@@ -4,6 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCustomers } from "../../../Context/CustomerContext";
 
 export default function DeleteCustomerPage() {
+
+
+
   const { id } = useParams();
   const navigate = useNavigate();
   const { customers, setCustomers } = useCustomers();
@@ -11,17 +14,22 @@ export default function DeleteCustomerPage() {
 
   const customer = customers.find((c) => c.id === Number(id));
 
-  useEffect(() => {
-    if (!customer) {
-      navigate(-1);
-    }
-  }, [customer, navigate]);
+ 
+  if (!customer) {
+  navigate("/customer", { replace: true });
+  return null;
+}
 
-  const handleDelete = () => {
-    setCustomers((prev) => prev.filter((c) => c.id !== Number(id)));
-    setOpen(false);
-    navigate("/customers"); 
-  };
+
+
+      const handleDelete = () => {
+      setCustomers((prev) =>
+        prev.filter((c) => c.id !== Number(id))
+      );
+
+      // direct navigate after delete
+      navigate("/customer", { replace: true });
+    };
 
   const handleClose = () => {
     setOpen(false);

@@ -9,9 +9,13 @@ import PageHeader from "../Common/Header";
 export default function CustomerTransactionReportNew() {
 
   const { id } = useParams();
-  const { customers } = useCustomers();
+  const { customers, transactions } = useCustomers();
 
   const customer = customers.find(c => c.id === Number(id));
+
+  const customerTransactions = transactions.filter(
+  (t) => t.customerId === customer.id
+);
 
   if (!customer) {
     return (
@@ -39,7 +43,10 @@ export default function CustomerTransactionReportNew() {
       </div>
 
       {/* Transaction List */}
-      <CustomerTransactionList customer={customer} />
+      <CustomerTransactionList 
+      customer={customer} 
+      transactions={customerTransactions}
+      />
 
     </div>
   );
