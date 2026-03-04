@@ -1,6 +1,29 @@
 import React from "react";
 
-export default function CustomerTransactionHeaderCard() {
+export default function CustomerTransactionHeaderCard({ customer }) {
+
+
+   // Customer initials
+  const getInitials = (name) => {
+    if (!name) return "";
+
+    const parts = name.trim().split(" ");
+
+    if (parts.length === 1) {
+      return parts[0][0].toUpperCase();
+    }
+
+    return (
+      parts[0][0] +
+      parts[parts.length - 1][0]
+    ).toUpperCase();
+  };
+
+  const balance = customer.balance || 0;
+
+
+
+
   return (
     <div className="pt-8 px-4 pb-4">
   <div className="relative rounded-3xl p-6 overflow-hidden
@@ -17,25 +40,33 @@ export default function CustomerTransactionHeaderCard() {
 
       {/* User Info */}
       <div className="flex items-center gap-4 mb-8">
-        <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl border border-green-300 shadow-sm">
-          AR
-        </div>
+            <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl border border-green-300 shadow-sm">
+              {getInitials(customer.name)}
+            </div>
 
-        <div>
-          <h1 className="text-green-600 text-xl font-bold tracking-tight">
-            আবদুর রাজ্জাক
-          </h1>
-
-          
-        </div>
-      </div>
+            <div>
+              <h1 className="text-green-600 text-xl font-bold tracking-tight">
+                {customer.name}
+              </h1>
+            </div>
+          </div>
 
       {/* Balance */}
       <div className="text-center">
-        <div className="text-red-400 text-4xl font-bold flex items-center justify-center gap-1">
-          <span className="text-2xl font-semibold">৳</span>
-          11,930.00
-        </div>
+            <div
+              className={`text-4xl font-bold flex items-center justify-center gap-1 ${
+                balance > 0
+                  ? "text-red-500"
+                  : balance < 0
+                  ? "text-green-500"
+                  : "text-gray-400"
+              }`}
+            >
+              <span className="text-2xl font-semibold">৳</span>
+              {Math.abs(balance).toLocaleString("en-BD", {
+                minimumFractionDigits: 2,
+              })}
+            </div>
 
         <p className="text-green-600 text-xs mt-1 uppercase tracking-widest">
           Current Balance
