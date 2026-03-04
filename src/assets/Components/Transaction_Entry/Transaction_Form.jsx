@@ -1,15 +1,14 @@
-import React, { useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import CustomCalendar from "../../Components/Common/MobileDatePicker";
 import CameraButton from "../Common/CameraButton";
 import { useCustomers } from "../../../Context/CustomerContext";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
 
 
 
 
-export default function Transaction_Form({onSubmit}) {
+export default function Transaction_Form({onSubmit, customer}) {
   const navigate = useNavigate();
   const [sell, setSell] = useState("");
   const [buy, setBuy] = useState("");
@@ -17,29 +16,24 @@ export default function Transaction_Form({onSubmit}) {
   const [date, setDate] = useState(new Date());
   const [image, setImage] = useState(null);
 
-
-
-  const { id } = useParams();
-
-  const { customers, setCustomers, addTransaction } = useCustomers();
-
-  const customer = customers.find(c => c.id === Number(id));
+  const { setCustomers, addTransaction } = useCustomers();
 
 
 
-const handleSubmit = () => {
-  if (!sell && !buy) {
-    alert("Please enter Sell or Buy amount");
-    return;
-  }
+
+const handleSubmit = useCallback(() => {
 
   const sellAmount = sell ? Number(sell) : 0;
   const buyAmount = buy ? Number(buy) : 0;
 
+  if (sellAmount === 0 && buyAmount === 0) {
+    return;
+  }
+
   const previousBalance = customer?.balance || 0;
 
- const currentBalance =
-  previousBalance + sellAmount - buyAmount;
+  const currentBalance =
+    previousBalance + sellAmount - buyAmount;
 
   const transaction = {
     id: Date.now(),
@@ -51,30 +45,20 @@ const handleSubmit = () => {
     image,
   };
 
-  // Save transaction
   addTransaction(transaction);
 
-  // Update customer balance
- setCustomers(prev =>
-  prev.map(c =>
-    c.id === customer.id
-      ? {
-          ...c,
-          balance: currentBalance,
-          updatedAt: new Date().toISOString(), // 🔥 important
-        }
-      : c
-  )
-);
+  setCustomers(prev =>
+    prev.map(c =>
+      c.id === customer.id
+        ? {
+            ...c,
+            balance: currentBalance,
+            updatedAt: new Date().toISOString(),
+          }
+        : c
+    )
+  );
 
-  // Reset form
-  setSell("");
-  setBuy("");
-  setDetails("");
-  setDate(new Date());
-  setImage(null);
-
-  // 🔥 Send data to success page
   navigate("/transaction-complete", {
     state: {
       customerId: customer.id,
@@ -84,7 +68,17 @@ const handleSubmit = () => {
       currentBalance,
     }
   });
-};
+
+}, [sell, buy, details, date, image, customer, addTransaction, setCustomers, navigate]);
+
+
+useEffect(() => {
+  if (onSubmit) {
+    onSubmit(() => handleSubmit);
+  }
+}, [onSubmit, handleSubmit]);
+
+
 
 
 

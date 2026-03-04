@@ -1,6 +1,5 @@
 import React from 'react'
 import BalanceSummary from '../assets/Components/Customer_page/BalanceSummary'
-import Search_Sort from '../assets/Components/Customer_page/Search_Sort'
 import Customer_list from '../assets/Components/Customer_page/Customer_list'
 import Header from '../assets/Components/Common/Header'
 

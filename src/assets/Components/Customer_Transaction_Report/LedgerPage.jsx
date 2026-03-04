@@ -4,8 +4,7 @@ import {
   IoFilter,
   IoDocumentText,
 } from "react-icons/io5";
-import { MdPayments } from "react-icons/md";
-import { FaWallet } from "react-icons/fa";
+  import { FaWallet } from "react-icons/fa";
 
 export default function LedgerPage() {
   return (
