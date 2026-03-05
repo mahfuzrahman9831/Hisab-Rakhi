@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerTransactionList({ transactions }) {
+
+  const navigate = useNavigate();
+
   const getInitials = (text) => {
     if (!text || text.trim() === "") return "OT";
     return text.trim().slice(0, 2).toUpperCase();
@@ -32,7 +36,8 @@ export default function CustomerTransactionList({ transactions }) {
         return (
           <div
             key={txn.id}
-            className="px-4 py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors"
+            onClick={() => navigate(`/transaction/${txn.id}`)}
+            className="px-3 py-2 border-b border-gray-100 hover:bg-gray-50 transition-all cursor-pointer active:scale-[0.98]"
           >
             <div className="flex items-center justify-between">
               <div>

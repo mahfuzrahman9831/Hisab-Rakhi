@@ -25,7 +25,7 @@ export default function CustomerTransactionHeaderCard({ customer }) {
 
 
   return (
-    <div className="pt-3 px-2 pb-2">
+    <div className="pt-3 px-2 pb-1">
   <div className="relative rounded-3xl p-6 overflow-hidden
                   bg-white/10 
                   backdrop-blur-xl
@@ -39,13 +39,13 @@ export default function CustomerTransactionHeaderCard({ customer }) {
     <div className="relative z-10">
 
       {/* User Info */}
-      <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl border border-green-300 shadow-sm">
+      <div className="text-center mb-6">
+            {/* <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl border border-green-300 shadow-sm">
               {getInitials(customer.name)}
-            </div>
+            </div> */}
 
             <div>
-              <h1 className="text-green-600 text-xl font-bold tracking-tight">
+              <h1 className="text-green-600 text-2xl font-bold tracking-tight">
                 {customer.name}
               </h1>
             </div>
@@ -54,7 +54,7 @@ export default function CustomerTransactionHeaderCard({ customer }) {
       {/* Balance */}
       <div className="text-center">
             <div
-              className={`text-4xl font-bold flex items-center justify-center gap-1 ${
+              className={`text-3xl font-bold flex items-center justify-center gap-1 ${
                 balance > 0
                   ? "text-red-500"
                   : balance < 0
