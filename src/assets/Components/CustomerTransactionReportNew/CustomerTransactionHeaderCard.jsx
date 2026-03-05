@@ -25,7 +25,7 @@ export default function CustomerTransactionHeaderCard({ customer }) {
 
 
   return (
-    <div className="pt-8 px-4 pb-4">
+    <div className="pt-3 px-2 pb-2">
   <div className="relative rounded-3xl p-6 overflow-hidden
                   bg-white/10 
                   backdrop-blur-xl
