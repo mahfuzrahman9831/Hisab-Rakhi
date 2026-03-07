@@ -8,13 +8,18 @@ export default function CameraButton({ onImageSelect }) {
     fileInputRef.current.click();
   };
 
-  const handleChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      onImageSelect(imageUrl);
-    }
+ const handleChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    onImageSelect(reader.result); // base64 image
   };
+
+  reader.readAsDataURL(file);
+};
 
   return (
     <>
