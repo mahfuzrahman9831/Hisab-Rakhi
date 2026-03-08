@@ -18,7 +18,7 @@ export default function CustomerTransactionPage() {
 
   return (
     <main className="max-w-[380px] mx-auto w-full pb-24 bg-gray-50 min-h-screen">
-      <PageHeader   title={editTransaction ? "Edit Transaction" : "New Transaction"} />
+      <PageHeader title={editTransaction ? "Edit Transaction" : "New Transaction"} />
 
       <Customer_Name customer={customer} />
 

@@ -59,12 +59,12 @@ export default function CustomerDetails() {
 
       {/* FIXED SUBMIT BUTTON */}
       <div className="sticky bottom-16 px-4 pb-4 bg-[#f3f4f6]">
-        <button
+        {/* <button
           onClick={() => submitFn && submitFn()}
           className="w-full bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-all text-white h-14 rounded-xl font-bold text-lg shadow-lg"
         >
           Submit
-        </button>
+        </button> */}
       </div>
     </div>
   );
