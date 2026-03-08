@@ -8,14 +8,33 @@ export default function CameraButton({ onImageSelect }) {
     fileInputRef.current.click();
   };
 
- const handleChange = (e) => {
+const handleChange = (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
   const reader = new FileReader();
 
-  reader.onloadend = () => {
-    onImageSelect(reader.result); // base64 image
+  reader.onload = (event) => {
+    const img = new Image();
+    img.src = event.target.result;
+
+    img.onload = () => {
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const MAX_WIDTH = 400;
+      const scale = MAX_WIDTH / img.width;
+
+      canvas.width = MAX_WIDTH;
+      canvas.height = img.height * scale;
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      const compressed = canvas.toDataURL("image/jpeg", 0.6);
+
+      onImageSelect(compressed);
+    };
   };
 
   reader.readAsDataURL(file);

@@ -12,6 +12,8 @@ import CustomerTransactionReportNew from "./assets/Components/CustomerTransactio
 import EditCustomerPage from "./assets/Components/EditCustomer/EditCustomerPage";
 import DeleteCustomerPage from "../src//assets/Components/DeleteCustomerPage/DeleteCustomerPage";
 import SingleTransactionPage from "./assets/Components/SingleTransactionPage/SingleTransactionPage";
+import TransactionEditPage from "./pages/TransactionEditPage";
+import CustomerTransactionPage from "./assets/Components/Transaction_Entry/CustomerTransactionPage";
 
 
 
@@ -39,6 +41,9 @@ function App() {
             <Route path="/customer/:id/edit" element={<EditCustomerPage />} />
             <Route path="/customer/:id/delete" element={<DeleteCustomerPage />} />
             <Route path="/transaction/:transactionId" element={<SingleTransactionPage />} />
+            {/* <Route path="/transaction/edit/:transactionId" element={<TransactionEditPage />} /> */}
+            <Route path="/customer/:id/report/edit/:transactionId" element={<CustomerTransactionPage />}/>
+
           </Routes>
         </div>
 

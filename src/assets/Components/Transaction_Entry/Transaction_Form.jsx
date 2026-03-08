@@ -8,15 +8,15 @@ import React, { useState, useEffect, useCallback } from "react";
 
 
 
-export default function Transaction_Form({onSubmit, customer}) {
+export default function Transaction_Form({onSubmit, customer, editTransaction }) {
   const navigate = useNavigate();
-  const [sell, setSell] = useState("");
-  const [buy, setBuy] = useState("");
-  const [details, setDetails] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [image, setImage] = useState(null);
+  const [sell, setSell] = useState(editTransaction?.sell || "");
+  const [buy, setBuy] = useState(editTransaction?.buy || "");
+  const [details, setDetails] = useState(editTransaction?.details || "");
+  const [date, setDate] = useState(editTransaction?.date || new Date());
+  const [image, setImage] = useState(editTransaction?.image || null);
 
-  const { setCustomers, addTransaction } = useCustomers();
+  const { setCustomers, addTransaction, updateTransaction } = useCustomers();
 
 
 
@@ -36,16 +36,20 @@ const handleSubmit = useCallback(() => {
     previousBalance + sellAmount - buyAmount;
 
   const transaction = {
-    id: Date.now(),
-    customerId: customer.id,
-    sell: sellAmount,
-    buy: buyAmount,
-    details,
-    date,
-    image,
-  };
+  id: editTransaction ? editTransaction.id : Date.now(),
+  customerId: customer.id,
+  sell: sellAmount,
+  buy: buyAmount,
+  details,
+  date,
+  image,
+};
 
+if (editTransaction) {
+  updateTransaction(transaction);
+} else {
   addTransaction(transaction);
+}
 
   setCustomers(prev =>
     prev.map(c =>
@@ -69,7 +73,7 @@ const handleSubmit = useCallback(() => {
     }
   });
 
-}, [sell, buy, details, date, image, customer, addTransaction, setCustomers, navigate]);
+}, [sell, buy, details, date, image, customer,editTransaction, addTransaction, updateTransaction, setCustomers, navigate]);
 
 
 useEffect(() => {
@@ -173,13 +177,13 @@ useEffect(() => {
       )}
 
       {/* Submit */}
-      {/* <button
+      <button
         onClick={handleSubmit}
         className="w-full bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-all text-white h-14 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-green-600/20"
       >
         <FaUserPlus size={18} />
-        Submit
-      </button> */}
+        {editTransaction ? "Update" : "Submit"}
+      </button>
     </main>
   );
 }

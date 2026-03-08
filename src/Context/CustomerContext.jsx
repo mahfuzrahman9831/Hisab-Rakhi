@@ -31,6 +31,23 @@ export function CustomerProvider({ children }) {
     setTransactions((prev) => [...prev, transaction]);
   };
 
+
+const deleteTransaction = (id) => {
+  setTransactions((prev) =>
+    prev.filter((t) => t.id !== id)
+  );
+};
+
+const updateTransaction = (updatedTxn) => {
+  setTransactions((prev) =>
+    prev.map((t) =>
+      t.id === updatedTxn.id ? updatedTxn : t
+    )
+  );
+};
+  
+
+
   return (
     <CustomerContext.Provider
       value={{
@@ -39,6 +56,8 @@ export function CustomerProvider({ children }) {
         transactions,
         addCustomer,
         addTransaction,
+        deleteTransaction,
+        updateTransaction,
       }}
     >
       {children}

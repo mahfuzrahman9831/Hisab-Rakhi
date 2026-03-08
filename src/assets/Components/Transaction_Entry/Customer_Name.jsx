@@ -17,6 +17,9 @@ function getInitials(name) {
 }
 
 export default function Customer_Name({ customer }) {
+
+    if (!customer) return null;
+
   const initials = getInitials(customer.name);
 
   return (
