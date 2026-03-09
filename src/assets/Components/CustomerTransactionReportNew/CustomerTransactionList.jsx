@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getRunningBalances } from "../../../utils/ledger";
 
 export default function CustomerTransactionList({ transactions }) {
-
   const navigate = useNavigate();
   const [preview, setPreview] = useState(null);
 
   // ESC key close
   useEffect(() => {
-
     const handleEsc = (e) => {
       if (e.key === "Escape") {
         setPreview(null);
@@ -18,7 +17,6 @@ export default function CustomerTransactionList({ transactions }) {
     window.addEventListener("keydown", handleEsc);
 
     return () => window.removeEventListener("keydown", handleEsc);
-
   }, []);
 
   const getInitials = (text) => {
@@ -35,44 +33,37 @@ export default function CustomerTransactionList({ transactions }) {
   }
 
   // chronological order
-  const ordered = [...transactions].sort(
-    (a, b) => new Date(a.date) - new Date(b.date)
-  );
-
+  const ordered = getRunningBalances(transactions);
   const sorted = [...ordered].reverse();
+
+
 
   return (
     <div className="flex-1 overflow-y-auto bg-white">
-
       {sorted.map((txn, index) => {
-
         const isSell = txn.sell > 0;
         const amount = isSell ? txn.sell : txn.buy;
 
         // running balance calculation
+        const currentIndex = ordered.length - 1 - index;
+
         const balance = ordered
-          .slice(0, ordered.length - index)
-          .reduce((acc, t) => {
-            return acc + (t.sell || 0) - (t.buy || 0);
-          }, 0);
+          .slice(0, currentIndex + 1)
+          .reduce((acc, t) => acc + (t.sell || 0) - (t.buy || 0), 0);
 
         return (
-
           <div
             key={txn.id}
             onClick={() => navigate(`/transaction/${txn.id}`)}
             className="grid grid-cols-[1fr_60px_110px] items-center px-3 py-3 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer"
           >
-
             {/* LEFT SIDE */}
             <div className="flex items-center gap-3">
-
               <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-sm">
                 {getInitials(txn.details)}
               </div>
 
               <div className="flex flex-col">
-
                 <span className="text-[13px] font-semibold text-gray-800">
                   {new Date(txn.date).toLocaleDateString("en-GB", {
                     day: "2-digit",
@@ -94,13 +85,11 @@ export default function CustomerTransactionList({ transactions }) {
                     {txn.details}
                   </span>
                 )}
-
               </div>
             </div>
 
             {/* IMAGE */}
             <div className="flex justify-center">
-
               {txn.image && (
                 <img
                   src={txn.image}
@@ -112,12 +101,10 @@ export default function CustomerTransactionList({ transactions }) {
                   }}
                 />
               )}
-
             </div>
 
             {/* RIGHT SIDE */}
             <div className="text-right">
-
               <div
                 className={`font-semibold ${
                   isSell ? "text-red-600" : "text-green-600"
@@ -129,7 +116,6 @@ export default function CustomerTransactionList({ transactions }) {
               </div>
 
               <div className="mt-1">
-
                 <span
                   className={`text-[11px] font-semibold py-1 px-3 rounded-full ${
                     balance > 0
@@ -142,15 +128,10 @@ export default function CustomerTransactionList({ transactions }) {
                     minimumFractionDigits: 2,
                   })}
                 </span>
-
               </div>
-
             </div>
-
           </div>
-
         );
-
       })}
 
       {/* IMAGE PREVIEW MODAL */}
@@ -160,7 +141,6 @@ export default function CustomerTransactionList({ transactions }) {
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={() => setPreview(null)}
         >
-
           {/* CLOSE BUTTON */}
           <button
             className="absolute top-6 right-6 text-white text-3xl font-bold"
@@ -175,10 +155,8 @@ export default function CustomerTransactionList({ transactions }) {
             className="max-w-[90%] max-h-[90%] rounded-xl shadow-lg"
             onClick={(e) => e.stopPropagation()}
           />
-
         </div>
       )}
-
     </div>
   );
 }

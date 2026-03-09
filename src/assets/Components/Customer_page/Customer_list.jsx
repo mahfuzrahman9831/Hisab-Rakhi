@@ -4,6 +4,7 @@ import { MdChevronRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Search_Sort from "./Search_Sort";
 import Search_Input from "./Search_Input";
+import { getCustomerBalance } from "../../../utils/ledger";
 
 function timeAgo(date) {
   if (!date) return "Just now";
@@ -46,14 +47,17 @@ export default function Customer_list() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { customers } = useCustomers();
+  const { customers, transactions } = useCustomers();
   const navigate = useNavigate();
 
   const [dueOnly, setDueOnly] = useState(false);
   const [sortType, setSortType] = useState(null);
 
   // 🔥 PROCESSING SECTION
-  let processedCustomers = [...customers];
+ let processedCustomers = customers.map((customer) => ({
+  ...customer,
+  balance: getCustomerBalance(transactions, customer.id),
+}));
 
   if (searchTerm.trim() !== "") {
   processedCustomers = processedCustomers.filter((c) =>

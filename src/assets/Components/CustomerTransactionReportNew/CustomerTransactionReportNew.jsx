@@ -43,7 +43,10 @@ export default function CustomerTransactionReportNew() {
 
       {/* Header Card */}
       <div className="sticky top-[56px] z-40">
-        <CustomerTransactionHeaderCard customer={customer} />
+        <CustomerTransactionHeaderCard 
+        customer={customer} 
+        transactions={customerTransactions}
+        />
       </div>
 
       {/* Action Bar */}

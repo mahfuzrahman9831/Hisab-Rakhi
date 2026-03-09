@@ -1,18 +1,26 @@
 import { useCustomers } from "../../../Context/CustomerContext";
+import { getCustomerBalance } from "../../../utils/ledger";
 
 export default function BalanceSummary() {
 
-  const { customers } = useCustomers();
+  const { customers, transactions } = useCustomers();
 
-  // 🔴 Total You'll Get (positive balances)
-  const totalGet = customers
-    .filter(c => c.balance > 0)
-    .reduce((sum, c) => sum + c.balance, 0);
+  let totalGet = 0;
+  let totalGive = 0;
 
-  // 🟢 Total You'll Give (negative balances)
-  const totalGive = customers
-    .filter(c => c.balance < 0)
-    .reduce((sum, c) => sum + Math.abs(c.balance), 0);
+  customers.forEach((customer) => {
+
+    const balance = getCustomerBalance(transactions, customer.id);
+
+    if (balance > 0) {
+      totalGet += balance;
+    }
+
+    if (balance < 0) {
+      totalGive += Math.abs(balance);
+    }
+
+  });
 
   return (
     <div className="flex gap-3 px-4 pb-4 pt-4">
@@ -22,6 +30,7 @@ export default function BalanceSummary() {
         <p className="text-[10px] uppercase tracking-wider font-bold text-red-500/70">
           Total You'll Get
         </p>
+
         <p className="text-lg font-bold text-red-600 leading-tight">
           ৳{totalGet.toLocaleString("en-BD")}
         </p>
@@ -32,6 +41,7 @@ export default function BalanceSummary() {
         <p className="text-[10px] uppercase tracking-wider font-bold text-green-500/70">
           Total You'll Give
         </p>
+
         <p className="text-lg font-bold text-green-600 leading-tight">
           ৳{totalGive.toLocaleString("en-BD")}
         </p>

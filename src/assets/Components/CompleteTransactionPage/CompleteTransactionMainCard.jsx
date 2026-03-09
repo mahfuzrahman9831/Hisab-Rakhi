@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useCustomers } from "../../../Context/CustomerContext";
+import { getCustomerBalance } from "../../../utils/ledger";
 
 const DetailRow = ({
   label,
@@ -20,17 +21,18 @@ const DetailRow = ({
 
 const TransactionSuccessCard = () => {
   const location = useLocation();
-  const { customers } = useCustomers();
+  const { customers, transactions } = useCustomers();
 
   const {
-    customerId,
-    sell = 0,
-    buy = 0,
-    previousBalance = 0,
-    currentBalance = 0,
-  } = location.state || {};
+  customerId,
+  sell = 0,
+  buy = 0,
+} = location.state || {};
 
   const customer = customers.find((c) => c.id === Number(customerId));
+
+  const currentBalance = getCustomerBalance(transactions, Number(customerId));
+  const previousBalance = currentBalance - (sell - buy);
 
   const getInitials = (name) => {
     if (!name) return "";

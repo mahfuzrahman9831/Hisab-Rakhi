@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 import { useCustomers } from "../Context/CustomerContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import { getCustomerBalance } from "../../src/utils/ledger";
 
 export default function CustomerDetails() {
   const { id } = useParams();
-  const { customers } = useCustomers();
+  const { customers, transactions } = useCustomers();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
@@ -16,6 +17,10 @@ export default function CustomerDetails() {
   const [submitFn, setSubmitFn] = useState(null);
 
   const customer = customers.find((c) => c.id === Number(id));
+
+
+const balance = getCustomerBalance(transactions, customer.id);
+
 
   // Click outside close
   useEffect(() => {
@@ -53,7 +58,10 @@ export default function CustomerDetails() {
 
       {/* CONTENT (NO SCROLL) */}
       <div className="flex-1 overflow-y-auto px-4 pb-20">
-        <Customer_Name customer={customer} />
+        <Customer_Name 
+        customer={customer} 
+        balance={balance}
+        />
         <Transaction_Form customer={customer} onSubmit={setSubmitFn} />
       </div>
 
