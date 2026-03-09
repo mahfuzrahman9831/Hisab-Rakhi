@@ -23,6 +23,14 @@ export function CustomerProvider({ children }) {
     localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [transactions]);
 
+// 🔥 delete transactions from localStorage
+  useEffect(() => {
+  localStorage.setItem(
+    "transactions",
+    JSON.stringify(transactions)
+  );
+}, [transactions]);
+
   const addCustomer = (customer) => {
     setCustomers((prev) => [...prev, customer]);
   };
@@ -30,6 +38,17 @@ export function CustomerProvider({ children }) {
   const addTransaction = (transaction) => {
     setTransactions((prev) => [...prev, transaction]);
   };
+
+
+  const toggleFavoriteCustomer = (id) => {
+  setCustomers((prev) =>
+    prev.map((c) =>
+      c.id === id
+        ? { ...c, favorite: !c.favorite }
+        : c
+    )
+  );
+};
 
 
 const deleteTransaction = (id) => {
@@ -58,6 +77,7 @@ const updateTransaction = (updatedTxn) => {
         addTransaction,
         deleteTransaction,
         updateTransaction,
+        toggleFavoriteCustomer,
       }}
     >
       {children}

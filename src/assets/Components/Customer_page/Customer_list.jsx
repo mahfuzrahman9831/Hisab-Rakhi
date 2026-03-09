@@ -47,11 +47,12 @@ export default function Customer_list() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { customers, transactions } = useCustomers();
+  const { customers, transactions, toggleFavoriteCustomer } = useCustomers();
   const navigate = useNavigate();
 
   const [dueOnly, setDueOnly] = useState(false);
   const [sortType, setSortType] = useState(null);
+  const [pressTimer, setPressTimer] = useState(null);
 
   // 🔥 PROCESSING SECTION
  let processedCustomers = customers.map((customer) => ({
@@ -89,6 +90,29 @@ export default function Customer_list() {
     processedCustomers.sort((a, b) => a.balance - b.balance);
   }
 
+
+// 🔥 long press handler
+  const handlePressStart = (customer) => {
+
+  const timer = setTimeout(() => {
+
+    const confirmAdd = window.confirm(
+      "Add this customer to Favorite?"
+    );
+
+    if (confirmAdd) {
+      toggleFavoriteCustomer(customer.id);
+    }
+
+  }, 600); // 600ms press
+
+  setPressTimer(timer);
+};
+
+const handlePressEnd = () => {
+  clearTimeout(pressTimer);
+};
+
   return (
     <>
       {/* 🔥 RENDER SECTION FOR FILTER & SORT */}
@@ -107,6 +131,10 @@ export default function Customer_list() {
           <div
             key={customer.id}
             onClick={() => navigate(`/customer/${customer.id}`)}
+            onMouseDown={() => handlePressStart(customer)}
+            onMouseUp={handlePressEnd}
+            onTouchStart={() => handlePressStart(customer)}
+            onTouchEnd={handlePressEnd}
             className="flex items-center justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 active:scale-[0.995] transition-all cursor-pointer"
           >
             {/* Left */}

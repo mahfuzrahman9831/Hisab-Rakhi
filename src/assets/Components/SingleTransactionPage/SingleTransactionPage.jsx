@@ -10,7 +10,6 @@ export default function SingleTransactionPage() {
   const { transactions, deleteTransaction, updateTransaction } = useCustomers();
   const navigate = useNavigate();
 
-
   const [preview, setPreview] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
 
@@ -124,15 +123,43 @@ export default function SingleTransactionPage() {
               </div>
 
               {/* COLUMN 4 : ACTIONS */}
-              <div className="flex flex-col items-end gap-3 pl-2"
-                    onClick={() => navigate(`/customer/${transaction.customerId}/report/edit/${transaction.id}`)}
+              {/* <div
+                className="flex flex-col items-end gap-3 pl-2"
+                onClick={() =>
+                  navigate(
+                    `/customer/${transaction.customerId}/report/edit/${transaction.id}`,
+                  )
+                }
               >
                 <button className="p-1 text-gray-400 hover:text-blue-600 transition">
                   <FiEdit2 size={16} />
                 </button>
 
-                <button className="p-1 text-gray-400 hover:text-red-600 transition"
-                onClick={() => setShowDelete(true)}
+                <button
+                  className="p-1 text-gray-400 hover:text-red-600 transition"
+                  onClick={() => setShowDelete(true)}
+                >
+                  <FiTrash2 size={16} />
+                </button>
+              </div> */}
+
+              <div className="flex flex-col items-end gap-3 pl-2">
+                {/* EDIT */}
+                <button
+                  onClick={() =>
+                    navigate(
+                      `/customer/${transaction.customerId}/report/edit/${transaction.id}`,
+                    )
+                  }
+                  className="p-1 text-gray-400 hover:text-blue-600 transition"
+                >
+                  <FiEdit2 size={16} />
+                </button>
+
+                {/* DELETE */}
+                <button
+                  onClick={() => setShowDelete(true)}
+                  className="p-1 text-gray-400 hover:text-red-600 transition"
                 >
                   <FiTrash2 size={16} />
                 </button>
@@ -181,82 +208,63 @@ export default function SingleTransactionPage() {
         </div>
       )}
 
-{showDelete && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      {showDelete && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl w-[280px] text-center">
+            <h3 className="text-lg font-semibold mb-3">Delete Transaction?</h3>
 
-    <div className="bg-white p-6 rounded-xl w-[280px] text-center">
+            <p className="text-sm text-gray-500 mb-5">
+              Are you sure you want to delete this transaction?
+            </p>
 
-      <h3 className="text-lg font-semibold mb-3">
-        Delete Transaction?
-      </h3>
+            <div className="flex gap-3 justify-center">
+              <button
+                className="px-4 py-2 bg-gray-200 rounded-lg"
+                onClick={() => setShowDelete(false)}
+              >
+                Cancel
+              </button>
 
-      <p className="text-sm text-gray-500 mb-5">
-        Are you sure you want to delete this transaction?
-      </p>
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                onClick={() => {
+                  deleteTransaction(transaction.id);
+                  setShowDelete(false);
+                  navigate(-1);
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-      <div className="flex gap-3 justify-center">
-
+      <div className="flex flex-col items-end gap-3 pl-2">
+        {/* EDIT */}
         <button
-          className="px-4 py-2 bg-gray-200 rounded-lg"
-          onClick={() => setShowDelete(false)}
+          onClick={() =>
+            navigate(
+              `/customer/${transaction.customerId}/report/edit/${transaction.id}`,
+            )
+          }
+          className="p-1 text-gray-400 hover:text-blue-600 transition"
         >
-          Cancel
+          <FiEdit2 size={16} />
         </button>
 
+        {/* DELETE */}
         <button
           className="px-4 py-2 bg-red-500 text-white rounded-lg"
           onClick={() => {
-            deleteTransaction(transaction.id);
+            deleteTransaction(Number(transaction.id));
+            setShowDelete(false);
             navigate(-1);
           }}
         >
           Delete
         </button>
-
       </div>
-
-    </div>
-
-  </div>
-)}
-
-
-{showDelete && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-
-    <div className="bg-white p-6 rounded-xl text-center">
-
-      <p className="mb-4">
-        Delete this transaction?
-      </p>
-
-      <div className="flex gap-3 justify-center">
-
-        <button
-          onClick={()=>setShowDelete(false)}
-          className="px-4 py-2 bg-gray-200 rounded"
-        >
-          Cancel
-        </button>
-
-        <button
-          onClick={()=>{
-            deleteTransaction(transaction.id);
-            navigate(-1);
-          }}
-          className="px-4 py-2 bg-red-500 text-white rounded"
-        >
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-)}
-
-
     </main>
   );
 }
