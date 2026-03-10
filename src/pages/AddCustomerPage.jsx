@@ -36,7 +36,7 @@ export default function AddCustomerPage() {
   updatedAt: new Date().toISOString(), // 🔥 এটা খুব জরুরি
 };
     addCustomer(newCustomer);
-    navigate("/customer");
+    navigate("/success", { state: { customer: newCustomer } });
   };
 
   return (
