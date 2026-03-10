@@ -23,8 +23,6 @@ export default function Home() {
         <Search></Search>
         <Tranactions></Tranactions>
       </div>
-
-      {/* <Footer_Nav></Footer_Nav> */}
     </div>
   );
 }

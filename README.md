@@ -1,16 +1,81 @@
-# React + Vite
+# Mayer Doa Store Ledger App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern **mobile-first React Ledger Application** for managing customers, transactions, balances, and financial summaries.
 
-Currently, two official plugins are available:
+Built using **React + TailwindCSS + LocalStorage**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+# Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Customer Management
+- Add new customers
+- Edit customer information
+- Delete customers
+- Customer search
+- Sort customers by balance
+- Filter due customers
 
-## Expanding the ESLint configuration
+### Transaction System
+- Add transactions (Sell / Buy)
+- Edit transactions
+- Delete transactions
+- Transaction history per customer
+- Running balance calculation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Ledger Balance Engine
+Balances are calculated dynamically from transactions.
+
+Formula:
+
+balance = totalSell - totalBuy
+
+
+### Favorite Customers
+Long press a customer to mark as **Favorite**.
+
+Favorites appear on **Home Dashboard**.
+
+### Dashboard
+Home page shows:
+
+- Favorite customers
+- Financial overview
+- Income / Expense gauges
+- Summary cards
+- Quick customer search
+
+### Financial Overview Widget
+Shows:
+
+- Income gauge
+- Expense gauge
+- Net profit
+
+### Customer Report
+Each customer page includes:
+
+- Current balance
+- Transaction entry form
+- Transaction history
+- Image attachment support
+
+### Image Support
+Transactions can store images (e.g., receipt proof).
+
+### Share Report
+Customer ledger report can be shared.
+
+---
+
+# Tech Stack
+
+- React
+- React Router
+- Tailwind CSS
+- LocalStorage
+- React Icons
+
+---
+
+# Folder Structure

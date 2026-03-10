@@ -5,6 +5,7 @@ import Summary_Cards from "./Summary_Cards";
 import Search from "./Search";
 import Tranactions from "./Tranactions";
 import Footer_Nav from "./Footer_Nav";
+import SummaryCardNew from "./SummaryCardNew";
 
 export default function Dashboard() {
   return (
@@ -12,7 +13,8 @@ export default function Dashboard() {
       <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
         <Header></Header>
         <Group_Business></Group_Business>
-        <Summary_Cards></Summary_Cards>
+        {/* <Summary_Cards></Summary_Cards> */}
+        <SummaryCardNew></SummaryCardNew>
         <Search></Search>
         <Tranactions></Tranactions>
         {/* <button className="absolute right-6 bottom-14 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-xl shadow-green-500/30 flex items-center justify-center z-40 transition active:scale-95">
