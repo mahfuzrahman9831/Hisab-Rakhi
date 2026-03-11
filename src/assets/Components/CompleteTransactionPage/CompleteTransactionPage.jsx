@@ -3,10 +3,20 @@ import ShareButton from "./ShareButton";
 import TransactionSuccessCard from "./CompleteTransactionMainCard";
 import PageHeader from "../Common/Header";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useCustomers } from "../../../Context/CustomerContext";
+import { getCustomerBalance } from "../../../utils/ledger";
 
 const TransactionSuccess = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { transactions } = useCustomers();
+
+  // ✅ এখানে location.state থেকে নিচ্ছি
+  const { customerId, sell = 0, buy = 0 } = location.state || {};
+
+  const currentBalance = getCustomerBalance(transactions, Number(customerId));
+  const previousBalance = currentBalance - (sell - buy);
 
   return (
     <div className="max-w-[380px] mx-auto h-screen overflow-hidden bg-[#f4f7f6] text-gray-800 font-['Hind_Siliguri',_sans-serif] flex flex-col">
@@ -27,18 +37,8 @@ const TransactionSuccess = () => {
         <div className="z-10 -mb-8 mt-4">
           <div className="success-circle">
             <svg className="success-check" viewBox="0 0 52 52">
-              <circle
-                className="success-circle-bg"
-                cx="26"
-                cy="26"
-                r="25"
-                fill="none"
-              />
-              <path
-                className="success-check-path"
-                fill="none"
-                d="M14 27l7 7 16-16"
-              />
+              <circle className="success-circle-bg" cx="26" cy="26" r="25" fill="none" />
+              <path className="success-check-path" fill="none" d="M14 27l7 7 16-16" />
             </svg>
           </div>
         </div>
@@ -46,10 +46,14 @@ const TransactionSuccess = () => {
         {/* Main Card */}
         <TransactionSuccessCard />
 
-        {/* Share Section */}
-        <ShareButton />
+        {/* ✅ Share Section — সব props পাঠাচ্ছি */}
+        <ShareButton
+          sell={sell}
+          buy={buy}
+          previousBalance={previousBalance}
+          currentBalance={currentBalance}
+        />
 
-        {/* Bottom Home Bar */}
         <div className="absolute bottom-4 w-32 h-1.5 bg-gray-300 rounded-full"></div>
       </div>
     </div>

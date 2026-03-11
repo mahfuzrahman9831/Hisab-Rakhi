@@ -19,7 +19,6 @@ function getInitials(name) {
 }
 
 export default function Customer_Name({ customer }) {
-
   const { transactions } = useCustomers();
 
   if (!customer) return null;
@@ -31,33 +30,24 @@ export default function Customer_Name({ customer }) {
 
   return (
     <div className="px-4 py-6 bg-gray-50 border-b border-gray-100">
-
       <div className="flex items-center justify-between mb-4">
-
         {/* LEFT SIDE */}
         <div className="flex items-center gap-4">
-
           <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-medium text-xl shrink-0">
             {initials}
           </div>
 
           <div className="flex flex-col items-start justify-center">
-
             <h2 className="text-[15px] font-medium text-gray-800 leading-tight">
               {customer.name}
             </h2>
 
-            <p className="text-sm text-gray-500 text-left">
-              {customer.phone}
-            </p>
-
+            <p className="text-sm text-gray-500 text-left">{customer.phone}</p>
           </div>
-
         </div>
 
         {/* RIGHT SIDE BALANCE */}
         <div className="text-right">
-
           <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400">
             Current Balance
           </p>
@@ -67,8 +57,8 @@ export default function Customer_Name({ customer }) {
               balance > 0
                 ? "text-red-600"
                 : balance < 0
-                ? "text-green-600"
-                : "text-gray-400"
+                  ? "text-green-600"
+                  : "text-gray-400"
             }`}
           >
             {Math.abs(balance).toLocaleString("en-BD", {
@@ -76,20 +66,28 @@ export default function Customer_Name({ customer }) {
               maximumFractionDigits: 2,
             })}
           </p>
-
         </div>
-
       </div>
 
       {/* SHARE BUTTON */}
-      <button className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors shadow-sm">
+      <button
+        onClick={() => {
+          const shareText =
+            balance > 0
+              ? `বাকি ${Math.abs(balance).toLocaleString("en-BD", { minimumFractionDigits: 2 })} টাকা\n${customer.name}\nMAHFUZ SHU & BOSTRALOY`
+              : balance < 0
+                ? `জমা ${Math.abs(balance).toLocaleString("en-BD", { minimumFractionDigits: 2 })} টাকা\n${customer.name}\nMAHFUZ SHU & BOSTRALOY`
+                : `ব্যালেন্স ০.০০ টাকা\n${customer.name}\nMAHFUZ SHU & BOSTRALOY`;
 
+          // ✅ মোবাইল + Desktop সব জায়গায় কাজ করবে
+          const encoded = encodeURIComponent(shareText);
+          window.open(`https://wa.me/?text=${encoded}`, "_blank");
+        }}
+        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors shadow-sm"
+      >
         <FiShare2 size={18} />
-
         Share Report
-
       </button>
-
     </div>
   );
 }
