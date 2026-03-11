@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./assets/Components/Dashboard/Dashboard";
 import Footer_Nav from "./assets/Components/Dashboard/Footer_Nav";
@@ -12,9 +12,14 @@ import CustomerTransactionReportNew from "./assets/Components/CustomerTransactio
 import EditCustomerPage from "./assets/Components/EditCustomer/EditCustomerPage";
 import DeleteCustomerPage from "../src//assets/Components/DeleteCustomerPage/DeleteCustomerPage";
 import SingleTransactionPage from "./assets/Components/SingleTransactionPage/SingleTransactionPage";
-import TransactionEditPage from "./pages/TransactionEditPage";
 import CustomerTransactionPage from "./assets/Components/Transaction_Entry/CustomerTransactionPage";
 import CustomerSuccessPage from "./pages/CustomerSuccessPage";
+
+// ✅ নতুন import
+import { AuthProvider } from "./Context/AuthContext";
+import ProtectedRoute from "./assets/Components/Common/ProtectedRoute";
+import HisabRakhiRegister from "./assets/Components/RegistrationPage/RegistrationPage";
+import HisabRakhiLoginLight from "./assets/Components/LoginPage/LoginPage";
 
 
 
@@ -25,26 +30,32 @@ function App() {
   const allowedRoutes = ["/", "/customer"];
   const showButton = allowedRoutes.includes(location.pathname);
 
-
   return (
-    <>
+    // ✅ AuthProvider দিয়ে সব wrap করো
+    <AuthProvider>
       <div className="min-h-screen flex flex-col bg-gray-50">
         <div className="flex-1">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/customer" element={<Customer />} />
-            <Route path="/report" element={<Report />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/add-customer" element={<AddCustomerPage />} />
-            <Route path="/customer/:id" element={<CustomerDetails />} />
-            <Route path="/transaction-complete" element={<CompleteTransactionPage />} />
-            <Route path="/customer/:id/report" element={<CustomerTransactionReportNew />}/>
-            <Route path="/customer/:id/edit" element={<EditCustomerPage />} />
-            <Route path="/customer/:id/delete" element={<DeleteCustomerPage />} />
-            <Route path="/transaction/:transactionId" element={<SingleTransactionPage />} />
-            {/* <Route path="/transaction/edit/:transactionId" element={<TransactionEditPage />} /> */}
-            <Route path="/customer/:id/report/edit/:transactionId" element={<CustomerTransactionPage />}/>
-            <Route path="/success" element={<CustomerSuccessPage />} />
+
+            <Route path="/" element={<Navigate to="/login" />} />
+            {/* ✅ Public Routes — যে কেউ দেখতে পারবে */}
+            <Route path="/login" element={<HisabRakhiLoginLight />} />
+            <Route path="/register" element={<HisabRakhiRegister />} />
+
+            {/* ✅ Protected Routes — শুধু লগইন করলে দেখা যাবে */}
+            <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/customer" element={<ProtectedRoute><Customer /></ProtectedRoute>} />
+            <Route path="/report" element={<ProtectedRoute><Report /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/add-customer" element={<ProtectedRoute><AddCustomerPage /></ProtectedRoute>} />
+            <Route path="/customer/:id" element={<ProtectedRoute><CustomerDetails /></ProtectedRoute>} />
+            <Route path="/transaction-complete" element={<ProtectedRoute><CompleteTransactionPage /></ProtectedRoute>} />
+            <Route path="/customer/:id/report" element={<ProtectedRoute><CustomerTransactionReportNew /></ProtectedRoute>} />
+            <Route path="/customer/:id/edit" element={<ProtectedRoute><EditCustomerPage /></ProtectedRoute>} />
+            <Route path="/customer/:id/delete" element={<ProtectedRoute><DeleteCustomerPage /></ProtectedRoute>} />
+            <Route path="/transaction/:transactionId" element={<ProtectedRoute><SingleTransactionPage /></ProtectedRoute>} />
+            <Route path="/customer/:id/report/edit/:transactionId" element={<ProtectedRoute><CustomerTransactionPage /></ProtectedRoute>} />
+            <Route path="/success" element={<ProtectedRoute><CustomerSuccessPage /></ProtectedRoute>} />
 
           </Routes>
         </div>
@@ -62,9 +73,9 @@ function App() {
         )}
 
         {/* Navbar */}
-        <Footer_Nav></Footer_Nav>
+        <Footer_Nav />
       </div>
-    </>
+    </AuthProvider>
   );
 }
 
