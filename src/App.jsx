@@ -14,12 +14,14 @@ import DeleteCustomerPage from "../src//assets/Components/DeleteCustomerPage/Del
 import SingleTransactionPage from "./assets/Components/SingleTransactionPage/SingleTransactionPage";
 import CustomerTransactionPage from "./assets/Components/Transaction_Entry/CustomerTransactionPage";
 import CustomerSuccessPage from "./pages/CustomerSuccessPage";
+import OTPPage from "./pages/OTPPage";
 
 // ✅ নতুন import
 import { AuthProvider } from "./Context/AuthContext";
 import ProtectedRoute from "./assets/Components/Common/ProtectedRoute";
-import HisabRakhiRegister from "./assets/Components/RegistrationPage/RegistrationPage";
-import HisabRakhiLoginLight from "./assets/Components/LoginPage/LoginPage";
+import LoginPage from "./assets/Components/LoginPage/LoginPage";
+import RegistrationPage from "./assets/Components/RegistrationPage/RegistrationPage";
+
 
 
 
@@ -30,6 +32,9 @@ function App() {
   const allowedRoutes = ["/", "/customer"];
   const showButton = allowedRoutes.includes(location.pathname);
 
+  // ✅ এই লাইনটা যোগ করো
+const hideNav = ["/login", "/register"].includes(location.pathname);
+
   return (
     // ✅ AuthProvider দিয়ে সব wrap করো
     <AuthProvider>
@@ -37,10 +42,10 @@ function App() {
         <div className="flex-1">
           <Routes>
 
-            <Route path="/" element={<Navigate to="/login" />} />
+           
             {/* ✅ Public Routes — যে কেউ দেখতে পারবে */}
-            <Route path="/login" element={<HisabRakhiLoginLight />} />
-            <Route path="/register" element={<HisabRakhiRegister />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegistrationPage />} />
 
             {/* ✅ Protected Routes — শুধু লগইন করলে দেখা যাবে */}
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -56,6 +61,7 @@ function App() {
             <Route path="/transaction/:transactionId" element={<ProtectedRoute><SingleTransactionPage /></ProtectedRoute>} />
             <Route path="/customer/:id/report/edit/:transactionId" element={<ProtectedRoute><CustomerTransactionPage /></ProtectedRoute>} />
             <Route path="/success" element={<ProtectedRoute><CustomerSuccessPage /></ProtectedRoute>} />
+            <Route path="/otp" element={<OTPPage />} />
 
           </Routes>
         </div>
@@ -72,8 +78,8 @@ function App() {
           </div>
         )}
 
-        {/* Navbar */}
-        <Footer_Nav />
+         {/* ✅ এই লাইনটা — আগের Footer_Nav এর জায়গায় */}
+        {!hideNav && <Footer_Nav />}
       </div>
     </AuthProvider>
   );
