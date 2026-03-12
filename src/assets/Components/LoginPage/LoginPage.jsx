@@ -14,15 +14,21 @@ const LoginPage = () => {
   const [error, setError] = useState("");
 
   const handleLogin = (e) => {
-    e.preventDefault();
-    setError("");
-    const result = login(phone, password);
-    if (result.success) {
-      navigate("/");
+  e.preventDefault();
+  setError("");
+  const result = login(phone, password);
+  if (result.success) {
+    
+    const pinSetupDone = localStorage.getItem("pinSetupDone");
+    if (!pinSetupDone) {
+      navigate("/pin-setup");
     } else {
-      setError(result.message);
+      navigate("/");
     }
-  };
+  } else {
+    setError(result.message);
+  }
+};
 
   return (
 
@@ -67,7 +73,7 @@ const LoginPage = () => {
                   <input
                     id="phone"
                     type="tel"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder="+8801XXXXXXXXX"
                     className="flex h-12 w-full rounded-lg border border-slate-200 bg-white px-10 py-2 text-sm ring-offset-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13ec6d] focus-visible:ring-offset-2"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}

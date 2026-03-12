@@ -10,9 +10,18 @@ export function AuthProvider({ children }) {
     return stored ? JSON.parse(stored) : null;
   });
 
+  // ✅ নতুন — shopInfo যোগ হয়েছে
+  const [shopInfo, setShopInfo] = useState(() => {
+    const stored = localStorage.getItem("shopInfo");
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  const [pin, setPin] = useState(() => {
+  return localStorage.getItem("userPin") || null;
+});
+
   const [confirmationResult, setConfirmationResult] = useState(null);
 
-  // ✅ reCAPTCHA setup
   const setupRecaptcha = () => {
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(
@@ -23,15 +32,14 @@ export function AuthProvider({ children }) {
           callback: () => {},
         },
       );
-      window.recaptchaVerifier.render(); // ✅ এই লাইনটা জরুরি
+      window.recaptchaVerifier.render();
     }
   };
 
-  // ✅ OTP পাঠাও
   const sendOTP = async (phone) => {
     try {
       setupRecaptcha();
-      const phoneNumber = "+88" + phone; // বাংলাদেশ কোড
+      const phoneNumber = "+88" + phone;
       const result = await signInWithPhoneNumber(
         auth,
         phoneNumber,
@@ -41,7 +49,6 @@ export function AuthProvider({ children }) {
       return { success: true };
     } catch (error) {
       console.error(error);
-      // reCAPTCHA reset করো error হলে
       if (window.recaptchaVerifier) {
         window.recaptchaVerifier.clear();
         window.recaptchaVerifier = null;
@@ -53,25 +60,20 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // ✅ OTP যাচাই করো
   const verifyOTP = async (otp, name, password) => {
     try {
       await confirmationResult.confirm(otp);
-
-      // ✅ LocalStorage এ ইউজার সেভ করো
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const phone = auth.currentUser?.phoneNumber?.replace("+88", "");
       const newUser = { id: Date.now(), name, phone, password };
       users.push(newUser);
       localStorage.setItem("users", JSON.stringify(users));
-
       return { success: true };
     } catch (error) {
       return { success: false, message: "OTP ভুল হয়েছে!" };
     }
   };
 
-  // ✅ লগইন
   const login = (phone, password) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     const found = users.find(
@@ -83,14 +85,30 @@ export function AuthProvider({ children }) {
     return { success: true };
   };
 
-  // ✅ লগআউট
   const logout = () => {
     setUser(null);
     localStorage.removeItem("loggedInUser");
   };
 
+
+  const savePin = (newPin) => {
+  setPin(newPin);
+  if (newPin) {
+    localStorage.setItem("userPin", newPin);
+  }
+  // ✅ প্রথমবার লগইন হয়েছে মার্ক করো
+  localStorage.setItem("pinSetupDone", "true");
+};
+
+  // ✅ নতুন — দোকানের তথ্য সেভ করার ফাংশন
+  const saveShopInfo = (info) => {
+    setShopInfo(info);
+    localStorage.setItem("shopInfo", JSON.stringify(info));
+  };
+
   return (
-    <AuthContext.Provider value={{ user, sendOTP, verifyOTP, login, logout }}>
+    // ✅ shopInfo আর saveShopInfo যোগ হয়েছে
+    <AuthContext.Provider value={{ user, shopInfo, pin, savePin, saveShopInfo, sendOTP, verifyOTP, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

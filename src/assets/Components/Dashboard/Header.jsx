@@ -1,7 +1,13 @@
 import { IoNotificationsOutline } from "react-icons/io5";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { useAuth } from "../../../Context/AuthContext";
 
 export default function Header() {
+
+
+  const { shopInfo, user } = useAuth();
+
+
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md px-4 pt-6 pb-4 flex items-center justify-between border-b border-gray-100">
       
@@ -20,10 +26,10 @@ export default function Header() {
         {/* Store Info */}
         <div>
           <h1 className="text-lg font-bold leading-tight text-slate-900">
-            Mayer Doa Store
+            {shopInfo?.shopName || "আমার দোকান"}
           </h1>
           <p className="text-xs text-gray-500">
-            Good Morning, Rahim
+            Good Morning, {user?.name}
           </p>
         </div>
       </div>

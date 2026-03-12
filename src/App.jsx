@@ -15,6 +15,10 @@ import SingleTransactionPage from "./assets/Components/SingleTransactionPage/Sin
 import CustomerTransactionPage from "./assets/Components/Transaction_Entry/CustomerTransactionPage";
 import CustomerSuccessPage from "./pages/CustomerSuccessPage";
 import OTPPage from "./pages/OTPPage";
+import ShopSetupPage from "./pages/ShopSetupPage";
+import PinSetupPage from "./pages/SecurityPinPage";
+
+
 
 // ✅ নতুন import
 import { AuthProvider } from "./Context/AuthContext";
@@ -62,6 +66,8 @@ const hideNav = ["/login", "/register"].includes(location.pathname);
             <Route path="/customer/:id/report/edit/:transactionId" element={<ProtectedRoute><CustomerTransactionPage /></ProtectedRoute>} />
             <Route path="/success" element={<ProtectedRoute><CustomerSuccessPage /></ProtectedRoute>} />
             <Route path="/otp" element={<OTPPage />} />
+            <Route path="/shop-setup" element={<ShopSetupPage />} />
+            <Route path="/pin-setup" element={<PinSetupPage />} />
 
           </Routes>
         </div>

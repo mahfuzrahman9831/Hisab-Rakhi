@@ -25,7 +25,7 @@ export default function OTPPage() {
     setLoading(false);
 
     if (result.success) {
-      navigate("/login"); // ✅ OTP সঠিক → লগইন পেজে যাবে
+      navigate("/shop-setup"); // ✅ OTP সঠিক → শপ সেটআপ পেজে যাও
     } else {
       setError(result.message);
     }

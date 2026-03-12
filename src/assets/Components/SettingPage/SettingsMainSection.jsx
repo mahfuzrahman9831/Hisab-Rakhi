@@ -5,14 +5,35 @@ import {
   FiGlobe,
   FiChevronRight,
   FiLogOut,
+  FiCheckCircle, 
+  FiAlertCircle,
 } from "react-icons/fi";
+import { useAuth } from "../../../Context/AuthContext"; 
+import { useNavigate } from "react-router-dom"; 
 
 
 export default function SettingsMainSection() {
+  const { logout, pin } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+
+   // ✅ Forget PIN — pinSetupDone রিসেট করে PIN পেজে পাঠাবে
+  const handleForgetPin = () => {
+    localStorage.removeItem("userPin");
+    localStorage.removeItem("pinSetupDone");
+    navigate("/pin-setup");
+  };
+
+
   return (
     <main className="flex-1 overflow-y-auto pb-24 bg-gray-50 max-w-md mx-auto">
 
-      {/* Account Section */}
+       {/* Account Section */}
       <section className="mt-6 px-4">
         <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 px-2 mb-2">
           Account Settings
@@ -21,42 +42,61 @@ export default function SettingsMainSection() {
         <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
 
           {/* Profile */}
-          <a
-            href="#"
-            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100"
-          >
+          <a href="#" className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
               <FiUser size={18} />
             </div>
             <div className="flex-1">
-              <p className="text-base font-semibold text-gray-900">
-                Profile
-              </p>
-              <p className="text-xs text-gray-500">
-                Business and NID information
-              </p>
+              <p className="text-base font-semibold text-gray-900">Profile</p>
+              <p className="text-xs text-gray-500">Business and NID information</p>
             </div>
             <FiChevronRight className="text-gray-400" />
           </a>
 
-          {/* Security */}
-          <a
-            href="#"
-            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
-              <FiLock size={18} />
+          {/* ✅ Security — PIN আছে কিনা দেখে দুটো আলাদা UI দেখাবে */}
+          {pin ? (
+            // ✅ PIN আছে — "Already Created" দেখাবে + Forget PIN অপশন
+            <div className="border-t border-gray-100">
+              <div className="flex items-center gap-4 p-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
+                  <FiCheckCircle size={18} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-base font-semibold text-gray-900">Security PIN</p>
+                  <p className="text-xs text-green-500 font-medium">✓ Security PIN Already Created</p>
+                </div>
+              </div>
+              {/* Forget PIN বাটন */}
+              <button
+                onClick={handleForgetPin}
+                className="w-full flex items-center gap-4 px-4 py-3 bg-orange-50 hover:bg-orange-100 transition-colors border-t border-orange-100"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-100 text-orange-500">
+                  <FiAlertCircle size={16} />
+                </div>
+                <div className="flex-1 text-left">
+                  <p className="text-sm font-semibold text-orange-500">Forgot PIN? Reset it</p>
+                  <p className="text-xs text-orange-400">এখানে ক্লিক করে নতুন PIN সেট করো</p>
+                </div>
+                <FiChevronRight className="text-orange-400" />
+              </button>
             </div>
-            <div className="flex-1">
-              <p className="text-base font-semibold text-gray-900">
-                Security Settings
-              </p>
-              <p className="text-xs text-gray-500">
-                Passwords and 2FA
-              </p>
-            </div>
-            <FiChevronRight className="text-gray-400" />
-          </a>
+          ) : (
+            // ✅ PIN নেই — "Create PIN" দেখাবে
+            <button
+              onClick={() => navigate("/pin-setup")}
+              className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-t border-gray-100"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
+                <FiLock size={18} />
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-base font-semibold text-gray-900">Security Settings</p>
+                <p className="text-xs text-orange-400 font-medium">⚠ Create Your Security PIN</p>
+              </div>
+              <FiChevronRight className="text-gray-400" />
+            </button>
+          )}
 
         </div>
       </section>
@@ -113,7 +153,11 @@ export default function SettingsMainSection() {
       {/* Danger Zone */}
       <section className="mt-8 px-4">
         <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
-          <button className="flex w-full items-center gap-4 p-4 hover:bg-red-50 transition-colors">
+          {/* ✅ onClick যোগ হয়েছে শুধু */}
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-4 p-4 hover:bg-red-50 transition-colors"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100 text-red-600">
               <FiLogOut size={18} />
             </div>
