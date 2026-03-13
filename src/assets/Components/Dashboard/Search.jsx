@@ -1,7 +1,6 @@
 import React from "react";
 import { IoMdSearch } from "react-icons/io";
-import { GoFilter } from "react-icons/go";
-import { MdDownload } from "react-icons/md";
+
 
 export default function Search() {
   return (
@@ -15,19 +14,11 @@ export default function Search() {
           <input
             type="text"
             placeholder="Search customers..."
-            className="w-full bg-white border border-gray-200 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-white border border-gray-200 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
 
-        {/* Filter Button */}
-        <button className="w-[42px] h-[42px] flex items-center justify-center bg-white border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-100 transition">
-          <GoFilter />
-        </button>
-
-        {/* PDF Button */}
-        <button className="w-[42px] h-[42px] flex items-center justify-center bg-green-500 hover:bg-green-600 text-white rounded-xl shadow-sm hover:opacity-90 active:scale-95 transition">
-          <MdDownload />
-        </button>
+       
       </section>
     </div>
   );

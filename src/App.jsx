@@ -34,7 +34,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const allowedRoutes = ["/", "/customer"];
+  const allowedRoutes = ["/customer"];
   const showButton = allowedRoutes.includes(location.pathname);
 
   // ✅ এই লাইনটা যোগ করো

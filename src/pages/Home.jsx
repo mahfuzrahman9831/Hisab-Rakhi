@@ -4,15 +4,11 @@ import Summary_Cards from "../assets/Components/Dashboard/Summary_Cards";
 import Search from "../assets/Components/Dashboard/Search";
 import Tranactions from "../assets/Components/Dashboard/Tranactions";
 import PageHeader from "../assets/Components/Common/Header";
-import { useCustomers } from "../Context/CustomerContext";
 
 
 
 
 export default function Home() {
-
-  const { customers } = useCustomers();
-
 
   return (
     <div className="max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24">
