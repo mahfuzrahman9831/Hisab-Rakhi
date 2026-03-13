@@ -1,19 +1,16 @@
 import { IoNotificationsOutline } from "react-icons/io5";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { useAuth } from "../../../Context/AuthContext";
+import { useBusiness } from "../../../Context/BusinessContext";
 
 export default function Header() {
-
-
   const { shopInfo, user } = useAuth();
-
+  const { activeBusiness } = useBusiness();
 
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md px-4 pt-6 pb-4 flex items-center justify-between border-b border-gray-100">
-      
       {/* Left Side */}
       <div className="flex items-center gap-3">
-        
         {/* Profile Image */}
         <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden border border-blue-200">
           <img
@@ -26,11 +23,9 @@ export default function Header() {
         {/* Store Info */}
         <div>
           <h1 className="text-lg font-bold leading-tight text-slate-900">
-            {shopInfo?.shopName || "আমার দোকান"}
+            {activeBusiness?.name || shopInfo?.shopName || "আমার দোকান"} // ✅
           </h1>
-          <p className="text-xs text-gray-500">
-            Good Morning, {user?.name}
-          </p>
+          <p className="text-xs text-gray-500">Good Morning, {user?.name}</p>
         </div>
       </div>
 
@@ -44,7 +39,6 @@ export default function Header() {
           <HiOutlineDotsVertical size={20} className="text-gray-600" />
         </button>
       </div>
-
     </header>
   );
 }

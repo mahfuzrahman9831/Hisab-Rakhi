@@ -18,6 +18,8 @@ import OTPPage from "./pages/OTPPage";
 import ShopSetupPage from "./pages/ShopSetupPage";
 import PinSetupPage from "./pages/SecurityPinPage";
 import SecurityPinPage from "./pages/SecurityPinPage";
+import { BusinessProvider } from "./Context/BusinessContext";
+import { CustomerProvider } from "./Context/CustomerContext";
 
 
 
@@ -43,6 +45,8 @@ const hideNav = ["/login", "/register"].includes(location.pathname);
   return (
     // ✅ AuthProvider দিয়ে সব wrap করো
     <AuthProvider>
+      <BusinessProvider> 
+         <CustomerProvider>
       <div className="min-h-screen flex flex-col bg-gray-50">
         <div className="flex-1">
           <Routes>
@@ -92,6 +96,8 @@ const hideNav = ["/login", "/register"].includes(location.pathname);
          {/* ✅ এই লাইনটা — আগের Footer_Nav এর জায়গায় */}
         {!hideNav && <Footer_Nav />}
       </div>
+        </CustomerProvider>
+      </BusinessProvider>
     </AuthProvider>
   );
 }

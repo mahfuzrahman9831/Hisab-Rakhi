@@ -1,85 +1,71 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useBusiness } from "./BusinessContext"; // ✅ যোগ করো
 
 const CustomerContext = createContext();
 
 export function CustomerProvider({ children }) {
+  const { activeBusinessId } = useBusiness(); // ✅ active business জানো
+
+  // ✅ প্রতিটা business এর আলাদা key
+  const customersKey = `customers_${activeBusinessId}`;
+  const transactionsKey = `transactions_${activeBusinessId}`;
+
   const [customers, setCustomers] = useState(() => {
-    const stored = localStorage.getItem("customers");
+    // ✅ পুরনো data migrate করো (প্রথমবার)
+    if (activeBusinessId === "biz_default") {
+      const old = localStorage.getItem("customers");
+      if (old) return JSON.parse(old);
+    }
+    const stored = localStorage.getItem(customersKey);
     return stored ? JSON.parse(stored) : [];
   });
 
   const [transactions, setTransactions] = useState(() => {
-    const stored = localStorage.getItem("transactions");
+    if (activeBusinessId === "biz_default") {
+      const old = localStorage.getItem("transactions");
+      if (old) return JSON.parse(old);
+    }
+    const stored = localStorage.getItem(transactionsKey);
     return stored ? JSON.parse(stored) : [];
   });
 
-  // 🔥 Save customers to localStorage
+  // ✅ Business switch হলে নতুন data লোড করো
   useEffect(() => {
-    localStorage.setItem("customers", JSON.stringify(customers));
-  }, [customers]);
+    if (activeBusinessId === "biz_default") {
+      const old = localStorage.getItem("customers");
+      setCustomers(old ? JSON.parse(old) : []);
+      const oldTxns = localStorage.getItem("transactions");
+      setTransactions(oldTxns ? JSON.parse(oldTxns) : []);
+    } else {
+      const stored = localStorage.getItem(customersKey);
+      setCustomers(stored ? JSON.parse(stored) : []);
+      const storedTxns = localStorage.getItem(transactionsKey);
+      setTransactions(storedTxns ? JSON.parse(storedTxns) : []);
+    }
+  }, [activeBusinessId]); // ✅ activeBusinessId বদলালে reload
 
-  // 🔥 Save transactions to localStorage
   useEffect(() => {
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-  }, [transactions]);
+    localStorage.setItem(customersKey, JSON.stringify(customers));
+  }, [customers, customersKey]);
 
-// 🔥 delete transactions from localStorage
   useEffect(() => {
-  localStorage.setItem(
-    "transactions",
-    JSON.stringify(transactions)
-  );
-}, [transactions]);
+    localStorage.setItem(transactionsKey, JSON.stringify(transactions));
+  }, [transactions, transactionsKey]);
 
-  const addCustomer = (customer) => {
-    setCustomers((prev) => [...prev, customer]);
-  };
-
-  const addTransaction = (transaction) => {
-    setTransactions((prev) => [...prev, transaction]);
-  };
-
-
-  const toggleFavoriteCustomer = (id) => {
-  setCustomers((prev) =>
-    prev.map((c) =>
-      c.id === id
-        ? { ...c, favorite: !c.favorite }
-        : c
-    )
-  );
-};
-
-
-const deleteTransaction = (id) => {
-  setTransactions((prev) =>
-    prev.filter((t) => t.id !== id)
-  );
-};
-
-const updateTransaction = (updatedTxn) => {
-  setTransactions((prev) =>
-    prev.map((t) =>
-      t.id === updatedTxn.id ? updatedTxn : t
-    )
-  );
-};
-  
-
+  const addCustomer = (customer) => setCustomers((prev) => [...prev, customer]);
+  const addTransaction = (transaction) => setTransactions((prev) => [...prev, transaction]);
+  const deleteTransaction = (id) => setTransactions((prev) => prev.filter((t) => t.id !== id));
+  const updateTransaction = (updatedTxn) => setTransactions((prev) => prev.map((t) => t.id === updatedTxn.id ? updatedTxn : t));
+  const toggleFavoriteCustomer = (id) => setCustomers((prev) => prev.map((c) => c.id === id ? { ...c, favorite: !c.favorite } : c));
 
   return (
-    <CustomerContext.Provider
-      value={{
-        customers,
-        setCustomers,
-        transactions,
-        addCustomer,
-        addTransaction,
-        deleteTransaction,
-        updateTransaction,
-        toggleFavoriteCustomer,
-      }}
-    >
+    <CustomerContext.Provider value={{
+      customers, setCustomers,
+      transactions,
+      addCustomer, addTransaction,
+      deleteTransaction, updateTransaction,
+      toggleFavoriteCustomer,
+    }}>
       {children}
     </CustomerContext.Provider>
   );
