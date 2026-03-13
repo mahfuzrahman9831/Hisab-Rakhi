@@ -123,6 +123,7 @@ const handlePressEnd = () => {
         setSortType={setSortType}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        displayedCustomers={processedCustomers}
       />
 
       {/* 🔥 CUSTOMER LIST RENDER */}

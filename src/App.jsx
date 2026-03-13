@@ -17,6 +17,7 @@ import CustomerSuccessPage from "./pages/CustomerSuccessPage";
 import OTPPage from "./pages/OTPPage";
 import ShopSetupPage from "./pages/ShopSetupPage";
 import PinSetupPage from "./pages/SecurityPinPage";
+import SecurityPinPage from "./pages/SecurityPinPage";
 
 
 
@@ -50,6 +51,11 @@ const hideNav = ["/login", "/register"].includes(location.pathname);
             {/* ✅ Public Routes — যে কেউ দেখতে পারবে */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegistrationPage />} />
+            <Route path="/otp" element={<OTPPage />} />
+            <Route path="/shop-setup" element={<ShopSetupPage />} />
+            <Route path="/pin-setup" element={<PinSetupPage />} />
+            <Route path="/pin-login" element={<SecurityPinPage mode="login" />} />
+            <Route path="/pin-setup" element={<SecurityPinPage mode="setup" />} />
 
             {/* ✅ Protected Routes — শুধু লগইন করলে দেখা যাবে */}
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -65,9 +71,8 @@ const hideNav = ["/login", "/register"].includes(location.pathname);
             <Route path="/transaction/:transactionId" element={<ProtectedRoute><SingleTransactionPage /></ProtectedRoute>} />
             <Route path="/customer/:id/report/edit/:transactionId" element={<ProtectedRoute><CustomerTransactionPage /></ProtectedRoute>} />
             <Route path="/success" element={<ProtectedRoute><CustomerSuccessPage /></ProtectedRoute>} />
-            <Route path="/otp" element={<OTPPage />} />
-            <Route path="/shop-setup" element={<ShopSetupPage />} />
-            <Route path="/pin-setup" element={<PinSetupPage />} />
+           
+            
 
           </Routes>
         </div>

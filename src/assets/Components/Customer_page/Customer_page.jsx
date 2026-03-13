@@ -10,7 +10,6 @@ export default function Customer_page() {
     <div className='max-w-[380px] mx-auto min-h-screen bg-[#f3f4f6] relative pb-24'>
        <CustomerHeader></CustomerHeader>
         <BalanceSummary></BalanceSummary>
-        <Search_Sort></Search_Sort>
         <Customer_list></Customer_list>
         <Footer_Nav></Footer_Nav>
     </div>
