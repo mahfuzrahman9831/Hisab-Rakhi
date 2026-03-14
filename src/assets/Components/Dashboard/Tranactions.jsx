@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCustomers } from "../../../Context/CustomerContext";
 import { getCustomerBalance } from "../../../utils/ledger";
 import { useNavigate } from "react-router-dom";
+import { IoSearchOutline } from "react-icons/io5";
 
 function timeAgo(date) {
   if (!date) return "Just now";
@@ -29,6 +30,8 @@ export default function Tranactions() {
 
   const { customers, transactions } = useCustomers();
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+
 
   function getInitials(name) {
     if (!name) return "";
@@ -46,27 +49,52 @@ export default function Tranactions() {
   }
 
   const favoriteCustomers = customers
-  .filter((c) => c.favorite)
-  .sort((a, b) => {
-    const dateA = new Date(a.updatedAt || a.createdAt || 0);
-    const dateB = new Date(b.updatedAt || b.createdAt || 0);
-    return dateB - dateA; // newest first
-  });
+    .filter((c) => c.favorite)
+    // ✅ search filter যোগ করো
+    .filter((c) =>
+      searchTerm.trim() === "" ||
+      c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (c.phone && c.phone.includes(searchTerm))
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.updatedAt || a.createdAt || 0);
+      const dateB = new Date(b.updatedAt || b.createdAt || 0);
+      return dateB - dateA;
+    });
 
   return (
-    <section className="space-y-4 px-4 pb-24">
+    <section className="space-y-4 px-4 pb-24 pt-4">
 
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-slate-900 text-lg">
           Favorite Customers
         </h3>
 
-        <button className="text-xs font-bold text-green-600">
-          View All
-        </button>
+        {/* ✅ View All সরিয়ে Search Field দাও */}
+        <div className="relative">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search..."
+            className="w-36 bg-gray-100 border border-gray-200 rounded-full py-1.5 pl-3 pr-8 text-xs focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 transition"
+          />
+          {searchTerm ? (
+            <button
+              onClick={() => setSearchTerm("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+          ) : (
+            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
+              <IoSearchOutline className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+            </span>
+          )}
+        </div>
       </div>
 
-      <div className="space-y-3 mt-4">
+      <div className="space-y-2 mt-4">
 
         {favoriteCustomers.length === 0 && (
           <p className="text-center text-gray-400 py-6">
@@ -82,7 +110,7 @@ export default function Tranactions() {
             <div
               key={customer.id}
               onClick={() => navigate(`/customer/${customer.id}`)}
-              className="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm cursor-pointer hover:bg-gray-50 active:scale-[0.99] transition"
+              className="flex justify-between items-center bg-white p-3 rounded-xl border border-gray-100 shadow-sm cursor-pointer hover:bg-gray-50 active:scale-[0.99] transition"
             >
 
               {/* LEFT */}

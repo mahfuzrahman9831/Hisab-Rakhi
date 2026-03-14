@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "./Header";
 import Group_Business from "./Group_Business";
-import Search from "./Search";
 import Tranactions from "./Tranactions";
 import SummaryCardNew from "./SummaryCardNew";
 
@@ -12,7 +11,6 @@ export default function Dashboard() {
         <Header></Header>
         <Group_Business></Group_Business>
         <SummaryCardNew></SummaryCardNew>
-        <Search></Search>
         <Tranactions></Tranactions>
       </div>
     </div>
