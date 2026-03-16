@@ -96,18 +96,18 @@ export function AuthProvider({ children }) {
   if (newPin) {
     localStorage.setItem("userPin", newPin);
   }
-  // ✅ প্রথমবার লগইন হয়েছে মার্ক করো
+  //  প্রথমবার লগইন হয়েছে মার্ক করো
   localStorage.setItem("pinSetupDone", "true");
 };
 
-  // ✅ নতুন — দোকানের তথ্য সেভ করার ফাংশন
+  //  নতুন — দোকানের তথ্য সেভ করার ফাংশন
   const saveShopInfo = (info) => {
     setShopInfo(info);
     localStorage.setItem("shopInfo", JSON.stringify(info));
   };
 
   return (
-    // ✅ shopInfo আর saveShopInfo যোগ হয়েছে
+    // shopInfo আর saveShopInfo যোগ হয়েছে
     <AuthContext.Provider value={{ user, shopInfo, pin, savePin, saveShopInfo, sendOTP, verifyOTP, login, logout }}>
       {children}
     </AuthContext.Provider>

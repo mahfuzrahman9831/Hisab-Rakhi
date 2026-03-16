@@ -109,7 +109,7 @@ useEffect(() => {
           value={sell}
           onChange={(e) => {
             setSell(e.target.value);
-            setBuy(""); // একসাথে দুইটা না দিতে চাইলে
+            setBuy(""); 
           }}
           placeholder=" "
           className="peer w-full px-4 py-4 bg-white border border-gray-200 rounded-xl text-xl font-semibold text-red-600 focus:border-red-500 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all"

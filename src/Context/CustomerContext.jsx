@@ -29,6 +29,45 @@ export function CustomerProvider({ children }) {
     return stored ? JSON.parse(stored) : [];
   });
 
+  const [trashedTransactions, setTrashedTransactions] = useState(() => {
+    const stored = localStorage.getItem(`trash_${activeBusinessId}`);
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      `trash_${activeBusinessId}`,
+      JSON.stringify(trashedTransactions),
+    );
+  }, [trashedTransactions, activeBusinessId]);
+
+  // ✅ deleteTransaction — permanent delete এর বদলে trash এ পাঠাও
+  const deleteTransaction = (id) => {
+    const txn = transactions.find((t) => t.id === id);
+    if (txn) {
+      setTrashedTransactions((prev) => [
+        ...prev,
+        { ...txn, deletedAt: new Date().toISOString() }, // ✅ কখন delete হয়েছে
+      ]);
+    }
+    setTransactions((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  // ✅ Restore from trash
+  const restoreTransaction = (id) => {
+    const txn = trashedTransactions.find((t) => t.id === id);
+    if (txn) {
+      const { deletedAt, ...original } = txn;
+      addTransaction(original);
+      setTrashedTransactions((prev) => prev.filter((t) => t.id !== id));
+    }
+  };
+
+  // ✅ Permanent delete from trash
+  const permanentDelete = (id) => {
+    setTrashedTransactions((prev) => prev.filter((t) => t.id !== id));
+  };
+
   // ✅ Business switch হলে নতুন data লোড করো
   useEffect(() => {
     if (activeBusinessId === "biz_default") {
@@ -53,19 +92,34 @@ export function CustomerProvider({ children }) {
   }, [transactions, transactionsKey]);
 
   const addCustomer = (customer) => setCustomers((prev) => [...prev, customer]);
-  const addTransaction = (transaction) => setTransactions((prev) => [...prev, transaction]);
-  const deleteTransaction = (id) => setTransactions((prev) => prev.filter((t) => t.id !== id));
-  const updateTransaction = (updatedTxn) => setTransactions((prev) => prev.map((t) => t.id === updatedTxn.id ? updatedTxn : t));
-  const toggleFavoriteCustomer = (id) => setCustomers((prev) => prev.map((c) => c.id === id ? { ...c, favorite: !c.favorite } : c));
+  const addTransaction = (transaction) =>
+    setTransactions((prev) => [...prev, transaction]);
+
+  const updateTransaction = (updatedTxn) =>
+    setTransactions((prev) =>
+      prev.map((t) => (t.id === updatedTxn.id ? updatedTxn : t)),
+    );
+  const toggleFavoriteCustomer = (id) =>
+    setCustomers((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, favorite: !c.favorite } : c)),
+    );
 
   return (
-    <CustomerContext.Provider value={{
-      customers, setCustomers,
-      transactions,
-      addCustomer, addTransaction,
-      deleteTransaction, updateTransaction,
-      toggleFavoriteCustomer,
-    }}>
+    <CustomerContext.Provider
+      value={{
+        customers,
+        setCustomers,
+        transactions,
+        trashedTransactions,
+        addCustomer,
+        addTransaction,
+        deleteTransaction,
+        restoreTransaction, 
+        permanentDelete,
+        updateTransaction,
+        toggleFavoriteCustomer,
+      }}
+    >
       {children}
     </CustomerContext.Provider>
   );

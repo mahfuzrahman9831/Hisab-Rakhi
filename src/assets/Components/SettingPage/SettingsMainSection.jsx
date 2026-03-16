@@ -5,12 +5,12 @@ import {
   FiGlobe,
   FiChevronRight,
   FiLogOut,
-  FiCheckCircle, 
+  FiCheckCircle,
   FiAlertCircle,
 } from "react-icons/fi";
-import { useAuth } from "../../../Context/AuthContext"; 
-import { useNavigate } from "react-router-dom"; 
-
+import { useAuth } from "../../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { FiTrash2 } from "react-icons/fi";
 
 export default function SettingsMainSection() {
   const { logout, pin } = useAuth();
@@ -21,34 +21,35 @@ export default function SettingsMainSection() {
     navigate("/login");
   };
 
-
-   // ✅ Forget PIN — pinSetupDone রিসেট করে PIN পেজে পাঠাবে
+  // ✅ Forget PIN — pinSetupDone রিসেট করে PIN পেজে পাঠাবে
   const handleForgetPin = () => {
     localStorage.removeItem("userPin");
     localStorage.removeItem("pinSetupDone");
     navigate("/pin-setup");
   };
 
-
   return (
     <main className="flex-1 overflow-y-auto pb-24 bg-gray-50 max-w-md mx-auto">
-
-       {/* Account Section */}
+      {/* Account Section */}
       <section className="mt-6 px-4">
         <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 px-2 mb-2">
           Account Settings
         </h2>
 
         <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
-
           {/* Profile */}
-          <a href="#" className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100">
+          <a
+            href="#"
+            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
               <FiUser size={18} />
             </div>
             <div className="flex-1">
               <p className="text-base font-semibold text-gray-900">Profile</p>
-              <p className="text-xs text-gray-500">Business and NID information</p>
+              <p className="text-xs text-gray-500">
+                Business and NID information
+              </p>
             </div>
             <FiChevronRight className="text-gray-400" />
           </a>
@@ -62,8 +63,12 @@ export default function SettingsMainSection() {
                   <FiCheckCircle size={18} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-base font-semibold text-gray-900">Security PIN</p>
-                  <p className="text-xs text-green-500 font-medium">✓ Security PIN Already Created</p>
+                  <p className="text-base font-semibold text-gray-900">
+                    Security PIN
+                  </p>
+                  <p className="text-xs text-green-500 font-medium">
+                    ✓ Security PIN Already Created
+                  </p>
                 </div>
               </div>
               {/* Forget PIN বাটন */}
@@ -75,8 +80,12 @@ export default function SettingsMainSection() {
                   <FiAlertCircle size={16} />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-sm font-semibold text-orange-500">Forgot PIN? Reset it</p>
-                  <p className="text-xs text-orange-400">এখানে ক্লিক করে নতুন PIN সেট করো</p>
+                  <p className="text-sm font-semibold text-orange-500">
+                    Forgot PIN? Reset it
+                  </p>
+                  <p className="text-xs text-orange-400">
+                    এখানে ক্লিক করে নতুন PIN সেট করো
+                  </p>
                 </div>
                 <FiChevronRight className="text-orange-400" />
               </button>
@@ -91,16 +100,19 @@ export default function SettingsMainSection() {
                 <FiLock size={18} />
               </div>
               <div className="flex-1 text-left">
-                <p className="text-base font-semibold text-gray-900">Security Settings</p>
-                <p className="text-xs text-orange-400 font-medium">⚠ Create Your Security PIN</p>
+                <p className="text-base font-semibold text-gray-900">
+                  Security Settings
+                </p>
+                <p className="text-xs text-orange-400 font-medium">
+                  ⚠ Create Your Security PIN
+                </p>
               </div>
               <FiChevronRight className="text-gray-400" />
             </button>
           )}
-
         </div>
       </section>
-    
+
       {/* Preferences Section */}
       <section className="mt-8 px-4">
         <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 px-2 mb-2">
@@ -108,7 +120,6 @@ export default function SettingsMainSection() {
         </h2>
 
         <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
-
           {/* Notifications */}
           <a
             href="#"
@@ -121,32 +132,24 @@ export default function SettingsMainSection() {
               <p className="text-base font-semibold text-gray-900">
                 Notifications
               </p>
-              <p className="text-xs text-gray-500">
-                Reminders and alerts
-              </p>
+              <p className="text-xs text-gray-500">Reminders and alerts</p>
             </div>
             <FiChevronRight className="text-gray-400" />
           </a>
-
-          {/* Language */}
-          <a
-            href="#"
-            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors"
+         
+          <button
+            onClick={() => navigate("/trash")}
+            className="flex items-center gap-4 p-4 hover:bg-red-50 transition-colors w-full text-left"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
-              <FiGlobe size={18} />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100 text-red-500">
+              <FiTrash2 size={18} />
             </div>
             <div className="flex-1">
-              <p className="text-base font-semibold text-gray-900">
-                Language
-              </p>
-              <p className="text-xs text-gray-500">
-                English (US)
-              </p>
+              <p className="text-base font-semibold text-black-500">Trash</p>
+              <p className="text-xs text-gray-500">মুছে ফেলা লেনদেন দেখুন</p>
             </div>
             <FiChevronRight className="text-gray-400" />
-          </a>
-
+          </button>
         </div>
       </section>
 
@@ -162,9 +165,7 @@ export default function SettingsMainSection() {
               <FiLogOut size={18} />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-base font-semibold text-red-600">
-                Log Out
-              </p>
+              <p className="text-base font-semibold text-red-600">Log Out</p>
             </div>
           </button>
         </div>
@@ -172,14 +173,11 @@ export default function SettingsMainSection() {
 
       {/* App Version */}
       <div className="mt-12 text-center px-4 pb-10">
-        <p className="text-sm text-gray-400">
-          Ledger App v2.4.12 (Premium)
-        </p>
+        <p className="text-sm text-gray-400">Ledger App v2.4.12 (Premium)</p>
         <p className="text-xs text-gray-400 mt-1">
           © 2024 Business Solutions Inc.
         </p>
       </div>
-
     </main>
   );
 }

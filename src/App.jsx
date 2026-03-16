@@ -20,6 +20,7 @@ import PinSetupPage from "./pages/SecurityPinPage";
 import SecurityPinPage from "./pages/SecurityPinPage";
 import { BusinessProvider } from "./Context/BusinessContext";
 import { CustomerProvider } from "./Context/CustomerContext";
+import TrashPage from "./pages/TrashPage";
 
 
 
@@ -75,6 +76,7 @@ const hideNav = ["/login", "/register"].includes(location.pathname);
             <Route path="/transaction/:transactionId" element={<ProtectedRoute><SingleTransactionPage /></ProtectedRoute>} />
             <Route path="/customer/:id/report/edit/:transactionId" element={<ProtectedRoute><CustomerTransactionPage /></ProtectedRoute>} />
             <Route path="/success" element={<ProtectedRoute><CustomerSuccessPage /></ProtectedRoute>} />
+            <Route path="/trash" element={<ProtectedRoute><TrashPage /></ProtectedRoute>} />
            
             
 

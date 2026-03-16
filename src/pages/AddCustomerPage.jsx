@@ -33,7 +33,7 @@ export default function AddCustomerPage() {
   profileImage,
   balance: 0,
   createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(), // 🔥 এটা খুব জরুরি
+  updatedAt: new Date().toISOString(), //  এটা খুব জরুরি
 };
     addCustomer(newCustomer);
     navigate("/success", { state: { customer: newCustomer } });
