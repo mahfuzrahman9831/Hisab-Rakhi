@@ -21,6 +21,7 @@ import SecurityPinPage from "./pages/SecurityPinPage";
 import { BusinessProvider } from "./Context/BusinessContext";
 import { CustomerProvider } from "./Context/CustomerContext";
 import TrashPage from "./pages/TrashPage";
+import UserProfilePage from "./assets/Components/UserProfile/UserProfilePage"; 
 
 
 
@@ -77,6 +78,7 @@ const hideNav = ["/login", "/register"].includes(location.pathname);
             <Route path="/customer/:id/report/edit/:transactionId" element={<ProtectedRoute><CustomerTransactionPage /></ProtectedRoute>} />
             <Route path="/success" element={<ProtectedRoute><CustomerSuccessPage /></ProtectedRoute>} />
             <Route path="/trash" element={<ProtectedRoute><TrashPage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
            
             
 

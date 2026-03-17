@@ -38,9 +38,9 @@ export default function SettingsMainSection() {
 
         <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
           {/* Profile */}
-          <a
-            href="#"
-            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100"
+          <button
+            onClick={() => navigate("/profile")} // ✅ navigate যোগ করো
+            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100 w-full text-left"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
               <FiUser size={18} />
@@ -52,7 +52,7 @@ export default function SettingsMainSection() {
               </p>
             </div>
             <FiChevronRight className="text-gray-400" />
-          </a>
+          </button>
 
           {/* ✅ Security — PIN আছে কিনা দেখে দুটো আলাদা UI দেখাবে */}
           {pin ? (
@@ -136,7 +136,7 @@ export default function SettingsMainSection() {
             </div>
             <FiChevronRight className="text-gray-400" />
           </a>
-         
+
           <button
             onClick={() => navigate("/trash")}
             className="flex items-center gap-4 p-4 hover:bg-red-50 transition-colors w-full text-left"
