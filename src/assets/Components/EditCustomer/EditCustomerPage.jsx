@@ -17,7 +17,7 @@ export default function EditCustomerPage() {
 
 
 
-  // 🔥 Local State
+  //  Local State
   const [formData, setFormData] = useState({
     name: "",
     phone: "",

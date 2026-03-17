@@ -36,8 +36,6 @@ export default function CustomerTransactionList({ transactions }) {
   const ordered = getRunningBalances(transactions);
   const sorted = [...ordered].reverse();
 
-
-
   return (
     <div className="flex-1 overflow-y-auto bg-white">
       {sorted.map((txn, index) => {
@@ -55,7 +53,7 @@ export default function CustomerTransactionList({ transactions }) {
           <div
             key={txn.id}
             onClick={() => navigate(`/transaction/${txn.id}`)}
-            className="grid grid-cols-[1fr_60px_110px] items-center px-3 py-3 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer"
+            className="grid grid-cols-[1fr_50px_auto] items-center px-3 py-3 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer"
           >
             {/* LEFT SIDE */}
             <div className="flex items-center gap-3">
@@ -104,9 +102,9 @@ export default function CustomerTransactionList({ transactions }) {
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="text-right">
+            <div className="text-right pl-2">
               <div
-                className={`font-semibold ${
+                className={`font-semibold whitespace-nowrap ${
                   isSell ? "text-red-600" : "text-green-600"
                 }`}
               >
@@ -117,7 +115,7 @@ export default function CustomerTransactionList({ transactions }) {
 
               <div className="mt-1">
                 <span
-                  className={`text-[11px] font-semibold py-1 px-3 rounded-full ${
+                  className={`text-[11px] font-semibold py-1 px-2 rounded-full whitespace-nowrap ${
                     balance > 0
                       ? "text-red-600 bg-red-100"
                       : "text-green-600 bg-green-100"
