@@ -68,6 +68,69 @@ export function CustomerProvider({ children }) {
     setTrashedTransactions((prev) => prev.filter((t) => t.id !== id));
   };
 
+
+  // ✅ trashedCustomers state Add
+const [trashedCustomers, setTrashedCustomers] = useState(() => {
+  const stored = localStorage.getItem(`trash_customers_${activeBusinessId}`);
+  return stored ? JSON.parse(stored) : [];
+});
+
+useEffect(() => {
+  localStorage.setItem(`trash_customers_${activeBusinessId}`, JSON.stringify(trashedCustomers));
+}, [trashedCustomers, activeBusinessId]);
+
+
+// ✅ ৩০ দিন পুরনো customer trash অটো ডিলিট
+useEffect(() => {
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  setTrashedCustomers((prev) =>
+    prev.filter((c) => new Date(c.deletedAt) > thirtyDaysAgo)
+  );
+}, []);
+
+// ✅ deleteCustomer — customer + তার সব transaction trash এ
+const deleteCustomer = (id) => {
+  const customer = customers.find((c) => c.id === id);
+  const customerTxns = transactions.filter((t) => t.customerId === id);
+
+  if (customer) {
+    setTrashedCustomers((prev) => [
+      ...prev,
+      {
+        ...customer,
+        trashedTransactions: customerTxns,
+        deletedAt: new Date().toISOString(),
+      },
+    ]);
+  }
+
+  setCustomers((prev) => prev.filter((c) => c.id !== id));
+  setTransactions((prev) => prev.filter((t) => t.customerId !== id));
+};
+
+// ✅ restoreCustomer
+const restoreCustomer = (id) => {
+  const trashedCust = trashedCustomers.find((c) => c.id === id);
+  if (!trashedCust) return;
+
+  const { trashedTransactions: txns, deletedAt, ...customerData } = trashedCust;
+
+  setCustomers((prev) => [...prev, customerData]);
+  if (txns?.length > 0) {
+    setTransactions((prev) => [...prev, ...txns]);
+  }
+  setTrashedCustomers((prev) => prev.filter((c) => c.id !== id));
+};
+
+// ✅ permanentDeleteCustomer
+const permanentDeleteCustomer = (id) => {
+  setTrashedCustomers((prev) => prev.filter((c) => c.id !== id));
+};
+
+
+
+
   // ✅ Business switch হলে নতুন data লোড করো
   useEffect(() => {
     if (activeBusinessId === "biz_default") {
@@ -107,15 +170,17 @@ export function CustomerProvider({ children }) {
   return (
     <CustomerContext.Provider
       value={{
-        customers,
-        setCustomers,
+        customers, setCustomers,
         transactions,
         trashedTransactions,
-        addCustomer,
-        addTransaction,
+        trashedCustomers,
+        addCustomer, addTransaction,
         deleteTransaction,
+        deleteCustomer,  
         restoreTransaction, 
+        restoreCustomer,
         permanentDelete,
+        permanentDeleteCustomer,
         updateTransaction,
         toggleFavoriteCustomer,
       }}
