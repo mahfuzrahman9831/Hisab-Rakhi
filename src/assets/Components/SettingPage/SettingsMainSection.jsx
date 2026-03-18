@@ -62,7 +62,7 @@ export default function SettingsMainSection() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
                   <FiCheckCircle size={18} />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-left">
                   <p className="text-base font-semibold text-gray-900">
                     Security PIN
                   </p>
@@ -128,7 +128,7 @@ export default function SettingsMainSection() {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
               <FiBell size={18} />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 text-left">
               <p className="text-base font-semibold text-gray-900">
                 Notifications
               </p>
