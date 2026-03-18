@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Search_Sort from "./Search_Sort";
 import { getCustomerBalance } from "../../../utils/ledger";
 import FavoriteConfirmModal from "../Common/FavoriteConfirmModal";
+import { motion, AnimatePresence } from "framer-motion";
+import { listVariants, listItemVariants } from "../../../utils/animations";
 
 function timeAgo(date) {
   if (!date) return "Just now";
@@ -83,41 +85,54 @@ export default function Customer_list() {
 
   const handleCancelFavorite = () => setSelectedCustomer(null);
 
-  return (
-    <>
-      <FavoriteConfirmModal
-        customer={selectedCustomer}
-        mode={modalMode} // ✅ mode pass করো
-        onConfirm={handleConfirmFavorite}
-        onCancel={handleCancelFavorite}
-      />
+return (
+  <>
+    <FavoriteConfirmModal
+      customer={selectedCustomer}
+      mode={modalMode}
+      onConfirm={handleConfirmFavorite}
+      onCancel={handleCancelFavorite}
+    />
 
-      <Search_Sort
-        dueOnly={dueOnly}
-        setDueOnly={setDueOnly}
-        sortType={sortType}
-        setSortType={setSortType}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        displayedCustomers={processedCustomers}
-      />
+    <Search_Sort
+      dueOnly={dueOnly}
+      setDueOnly={setDueOnly}
+      sortType={sortType}
+      setSortType={setSortType}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      displayedCustomers={processedCustomers}
+    />
 
-      <div className="bg-white rounded-xl overflow-hidden shadow-sm">
-        {processedCustomers.length === 0 && (
-          <p className="text-center text-gray-400 py-10 text-sm">
-            কোনো কাস্টমার পাওয়া যায়নি
-          </p>
-        )}
+    {/* ✅ Animated list wrapper */}
+    <motion.div
+      variants={listVariants}
+      initial="initial"
+      animate="animate"
+      className="bg-white rounded-xl overflow-hidden shadow-sm"
+    >
+      {processedCustomers.length === 0 && (
+        <motion.p
+          variants={listItemVariants}
+          className="text-center text-gray-400 py-10 text-sm"
+        >
+          কোনো কাস্টমার পাওয়া যায়নি
+        </motion.p>
+      )}
 
+      <AnimatePresence>
         {processedCustomers.map((customer) => (
-          <div
+          <motion.div
             key={customer.id}
+            variants={listItemVariants}
+            layout
+            whileTap={{ scale: 0.98 }}
             onClick={() => navigate(`/customer/${customer.id}`)}
             onMouseDown={() => handlePressStart(customer)}
             onMouseUp={handlePressEnd}
             onTouchStart={() => handlePressStart(customer)}
             onTouchEnd={handlePressEnd}
-            className="flex items-center justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 active:scale-[0.995] transition-all cursor-pointer"
+            className="flex items-center justify-between px-4 py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 cursor-pointer"
           >
             {/* Left */}
             <div className="flex items-center gap-3">
@@ -130,13 +145,12 @@ export default function Customer_list() {
               </div>
 
               <div className="flex flex-col items-start justify-center">
-                {/* ✅ নামের পাশে Star icon */}
                 <div className="flex items-center gap-1">
                   <span className="text-[15px] font-medium text-gray-800 leading-tight">
                     {customer.name}
                   </span>
                   {customer.favorite && (
-                    <IoStar className="text-green-500 text-xs" /> // ✅
+                    <IoStar className="text-green-500 text-xs" />
                   )}
                 </div>
                 <span className="text-[11px] text-gray-400 mt-0.5 tracking-wide">
@@ -159,9 +173,10 @@ export default function Customer_list() {
               </span>
               <MdChevronRight className="text-gray-400 text-xl" />
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </>
-  );
+      </AnimatePresence>
+    </motion.div>
+  </>
+);
 }

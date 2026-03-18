@@ -17,6 +17,7 @@
     "@tailwindcss/vite": "^4.2.0",
     "dayjs": "^1.11.19",
     "firebase": "^12.10.0",
+    "framer-motion": "^12.38.0",
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

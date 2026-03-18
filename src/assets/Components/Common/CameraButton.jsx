@@ -8,37 +8,50 @@ export default function CameraButton({ onImageSelect }) {
     fileInputRef.current.click();
   };
 
-const handleChange = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const reader = new FileReader();
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
 
-  reader.onload = (event) => {
-    const img = new Image();
-    img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
-    img.onload = () => {
+        // ✅ আরো ছোট করো — max 600px
+        const MAX = 600;
+        let w = img.width;
+        let h = img.height;
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+        if (w > h) {
+          if (w > MAX) { h = (h * MAX) / w; w = MAX; }
+        } else {
+          if (h > MAX) { w = (w * MAX) / h; h = MAX; }
+        }
 
-      const MAX_WIDTH = 400;
-      const scale = MAX_WIDTH / img.width;
+        canvas.width = Math.round(w);
+        canvas.height = Math.round(h);
 
-      canvas.width = MAX_WIDTH;
-      canvas.height = img.height * scale;
+        // ✅ সাদা background দাও — transparent PNG এর জন্য
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        // ✅ quality 0.5 = 50% — আরো ছোট
+        const compressed = canvas.toDataURL("image/jpeg", 0.5);
 
-      const compressed = canvas.toDataURL("image/jpeg", 0.6);
+        // ✅ size check — console এ দেখবে কত KB হলো
+        const kb = Math.round((compressed.length * 3) / 4 / 1024);
+        console.log(`📷 Compressed image: ~${kb} KB`);
 
-      onImageSelect(compressed);
+        onImageSelect(compressed);
+      };
     };
+    reader.readAsDataURL(file);
   };
-
-  reader.readAsDataURL(file);
-};
 
   return (
     <>
