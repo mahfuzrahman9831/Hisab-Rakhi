@@ -23,42 +23,53 @@ export function AuthProvider({ children }) {
   const [confirmationResult, setConfirmationResult] = useState(null);
 
   const setupRecaptcha = () => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: () => {},
-        },
-      );
-      window.recaptchaVerifier.render();
-    }
-  };
+  // ✅ আগেরটা থাকলে clear করো
+  if (window.recaptchaVerifier) {
+    window.recaptchaVerifier.clear();
+    window.recaptchaVerifier = null;
+  }
 
-  const sendOTP = async (phone) => {
-    try {
-      setupRecaptcha();
-      const phoneNumber = "+88" + phone;
-      const result = await signInWithPhoneNumber(
-        auth,
-        phoneNumber,
-        window.recaptchaVerifier,
-      );
-      setConfirmationResult(result);
-      return { success: true };
-    } catch (error) {
-      console.error(error);
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
+  // ✅ container empty করো
+  const container = document.getElementById("recaptcha-container");
+  if (container) container.innerHTML = "";
+
+  window.recaptchaVerifier = new RecaptchaVerifier(
+    auth,
+    "recaptcha-container",
+    {
+      size: "invisible", // ✅ দেখা যাবে না
+      callback: () => {},
+      "expired-callback": () => {
         window.recaptchaVerifier = null;
-      }
-      return {
-        success: false,
-        message: "OTP পাঠাতে সমস্যা হয়েছে: " + error.message,
-      };
+      },
     }
-  };
+  );
+};
+
+const sendOTP = async (phone) => {
+  try {
+    setupRecaptcha(); // ✅ প্রতিবার fresh recaptcha
+    const phoneNumber = "+88" + phone;
+    const result = await signInWithPhoneNumber(
+      auth,
+      phoneNumber,
+      window.recaptchaVerifier,
+    );
+    setConfirmationResult(result);
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    // ✅ error হলেও cleanup
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear();
+      window.recaptchaVerifier = null;
+    }
+    return {
+      success: false,
+      message: "OTP পাঠাতে সমস্যা হয়েছে: " + error.message,
+    };
+  }
+};
 
   const verifyOTP = async (otp, name, password) => {
     try {

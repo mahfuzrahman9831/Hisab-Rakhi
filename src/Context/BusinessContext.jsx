@@ -12,25 +12,48 @@ export function BusinessProvider({ children }) {
   const [businesses, setBusinesses] = useState(() => {
     const stored = localStorage.getItem("businesses");
     if (stored) return JSON.parse(stored);
-    // ✅ প্রথমবার — shopInfo থেকে default business বানাও
-    const shopInfo = localStorage.getItem("shopInfo");
-    if (shopInfo) {
-      const shop = JSON.parse(shopInfo);
-      const defaultBiz = {
-        id: "biz_default",
-        name: shop.shopName || "আমার ব্যবসা",
-        address: shop.shopAddress || "",
-        createdAt: new Date().toISOString(),
-      };
-      localStorage.setItem("businesses", JSON.stringify([defaultBiz]));
-      return [defaultBiz];
-    }
     return [];
   });
 
   const [activeBusinessId, setActiveBusinessId] = useState(() => {
     return localStorage.getItem("activeBusinessId") || "biz_default";
   });
+
+  // ✅ shopInfo save হলে default business sync করো
+  useEffect(() => {
+    const shopInfo = localStorage.getItem("shopInfo");
+    if (!shopInfo) return;
+
+    const shop = JSON.parse(shopInfo);
+    if (!shop?.shopName) return;
+
+    setBusinesses((prev) => {
+      // ✅ biz_default আগে থেকে আছে কিনা চেক করো
+      const defaultExists = prev.find((b) => b.id === "biz_default");
+
+      if (defaultExists) {
+        // ✅ আছে — name/address আপডেট করো
+        return prev.map((b) =>
+          b.id === "biz_default"
+            ? {
+                ...b,
+                name: shop.shopName,
+                address: shop.shopAddress || b.address,
+              }
+            : b
+        );
+      } else {
+        // ✅ নেই — নতুন default বানাও
+        const defaultBiz = {
+          id: "biz_default",
+          name: shop.shopName,
+          address: shop.shopAddress || "",
+          createdAt: new Date().toISOString(),
+        };
+        return [defaultBiz, ...prev];
+      }
+    });
+  }, []); // ✅ mount এ একবার run করবে
 
   useEffect(() => {
     localStorage.setItem("businesses", JSON.stringify(businesses));
@@ -40,7 +63,8 @@ export function BusinessProvider({ children }) {
     localStorage.setItem("activeBusinessId", activeBusinessId);
   }, [activeBusinessId]);
 
-  const activeBusiness = businesses.find((b) => b.id === activeBusinessId) || businesses[0];
+  const activeBusiness =
+    businesses.find((b) => b.id === activeBusinessId) || businesses[0];
 
   const addBusiness = (name, address) => {
     const newBiz = {
@@ -58,13 +82,15 @@ export function BusinessProvider({ children }) {
   };
 
   return (
-    <BusinessContext.Provider value={{
-      businesses,
-      activeBusiness,
-      activeBusinessId,
-      addBusiness,
-      switchBusiness,
-    }}>
+    <BusinessContext.Provider
+      value={{
+        businesses,
+        activeBusiness,
+        activeBusinessId,
+        addBusiness,
+        switchBusiness,
+      }}
+    >
       {children}
     </BusinessContext.Provider>
   );

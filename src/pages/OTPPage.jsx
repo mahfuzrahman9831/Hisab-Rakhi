@@ -46,14 +46,18 @@ export default function OTPPage() {
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="w-full max-w-[440px] bg-white p-8 rounded-xl shadow-sm border border-slate-200 space-y-6"
       >
-
         {/* ✅ Header */}
         <div className="flex flex-col items-center text-center">
           {/* Icon spin + bounce */}
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 15,
+              delay: 0.2,
+            }}
             className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#13ec6d]/20"
           >
             <MdAccountBalanceWallet className="text-3xl text-[#13ec6d]" />
@@ -107,7 +111,9 @@ export default function OTPPage() {
             transition={{ delay: 0.42, duration: 0.3 }}
             className="flex flex-col gap-2"
           >
-            <label className="text-sm font-semibold text-slate-900">OTP কোড</label>
+            <label className="text-sm font-semibold text-slate-900">
+              OTP কোড
+            </label>
             <input
               type="number"
               placeholder="6 সংখ্যার OTP দাও"
@@ -156,7 +162,17 @@ export default function OTPPage() {
         </motion.form>
       </motion.div>
 
-      <div id="recaptcha-container"></div>
+      <div
+        id="recaptcha-container"
+        style={{
+          position: "fixed",
+          bottom: 0,
+          opacity: 0,
+          pointerEvents: "none",
+          height: 0,
+          overflow: "hidden",
+        }}
+      ></div>
     </motion.div>
   );
 }
