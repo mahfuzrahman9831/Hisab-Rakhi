@@ -7,6 +7,7 @@ import {
   FiLogOut,
   FiCheckCircle,
   FiAlertCircle,
+  FiMessageSquare,
 } from "react-icons/fi";
 import { useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -121,9 +122,9 @@ export default function SettingsMainSection() {
 
         <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
           {/* Notifications */}
-          <a
-            href="#"
-            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100"
+          <button
+            onClick={() => navigate("/notifications")}
+            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors border-b border-gray-100 w-full text-left"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600">
               <FiBell size={18} />
@@ -135,7 +136,7 @@ export default function SettingsMainSection() {
               <p className="text-xs text-gray-500">Reminders and alerts</p>
             </div>
             <FiChevronRight className="text-gray-400" />
-          </a>
+          </button>
 
           <button
             onClick={() => navigate("/trash")}
@@ -147,6 +148,20 @@ export default function SettingsMainSection() {
             <div className="flex-1">
               <p className="text-base font-semibold text-black-500">Trash</p>
               <p className="text-xs text-gray-500">মুছে ফেলা লেনদেন দেখুন</p>
+            </div>
+            <FiChevronRight className="text-gray-400" />
+          </button>
+
+          <button
+            onClick={() => navigate("/feedback")}
+            className="flex items-center gap-4 p-4 hover:bg-blue-50 transition-colors w-full text-left border-t border-gray-100"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-500">
+              <FiMessageSquare size={18} />
+            </div>
+            <div className="flex-1">
+              <p className="text-base font-semibold text-gray-900">Feedback</p>
+              <p className="text-xs text-gray-500">বাগ রিপোর্ট বা সাজেশন দিন</p>
             </div>
             <FiChevronRight className="text-gray-400" />
           </button>

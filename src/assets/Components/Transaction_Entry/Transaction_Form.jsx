@@ -4,11 +4,9 @@ import CameraButton from "../Common/CameraButton";
 import { useCustomers } from "../../../Context/CustomerContext";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion"; // ✅
 
-
-
-
-export default function Transaction_Form({onSubmit, customer, editTransaction }) {
+export default function Transaction_Form({ onSubmit, customer, editTransaction }) {
   const navigate = useNavigate();
   const [sell, setSell] = useState(editTransaction?.sell || "");
   const [buy, setBuy] = useState(editTransaction?.buy || "");
@@ -18,172 +16,145 @@ export default function Transaction_Form({onSubmit, customer, editTransaction })
 
   const { setCustomers, addTransaction, updateTransaction } = useCustomers();
 
+  const handleSubmit = useCallback(() => {
+    const sellAmount = sell ? Number(sell) : 0;
+    const buyAmount = buy ? Number(buy) : 0;
+    if (sellAmount === 0 && buyAmount === 0) return;
 
+    const previousBalance = customer?.balance || 0;
+    const currentBalance = previousBalance + sellAmount - buyAmount;
 
-
-const handleSubmit = useCallback(() => {
-
-  const sellAmount = sell ? Number(sell) : 0;
-  const buyAmount = buy ? Number(buy) : 0;
-
-  if (sellAmount === 0 && buyAmount === 0) {
-    return;
-  }
-
-  const previousBalance = customer?.balance || 0;
-
-  const currentBalance =
-    previousBalance + sellAmount - buyAmount;
-
-  const transaction = {
-  id: editTransaction ? editTransaction.id : Date.now(),
-  customerId: customer.id,
-  sell: sellAmount,
-  buy: buyAmount,
-  details,
-  date,
-  image,
-};
-
-if (editTransaction) {
-  updateTransaction(transaction);
-} else {
-  addTransaction(transaction);
-}
-
-  setCustomers(prev =>
-    prev.map(c =>
-      c.id === customer.id
-        ? {
-            ...c,
-            balance: currentBalance,
-            updatedAt: new Date().toISOString(),
-          }
-        : c
-    )
-  );
-
-  navigate("/transaction-complete", {
-    state: {
+    const transaction = {
+      id: editTransaction ? editTransaction.id : Date.now(),
       customerId: customer.id,
       sell: sellAmount,
       buy: buyAmount,
-      previousBalance,
-      currentBalance,
+      details, date, image,
+    };
+
+    if (editTransaction) {
+      updateTransaction(transaction);
+    } else {
+      addTransaction(transaction);
     }
-  });
 
-}, [sell, buy, details, date, image, customer,editTransaction, addTransaction, updateTransaction, setCustomers, navigate]);
+    setCustomers(prev =>
+      prev.map(c =>
+        c.id === customer.id
+          ? { ...c, balance: currentBalance, updatedAt: new Date().toISOString() }
+          : c
+      )
+    );
 
+    navigate("/transaction-complete", {
+      state: { customerId: customer.id, sell: sellAmount, buy: buyAmount, previousBalance, currentBalance },
+    });
+  }, [sell, buy, details, date, image, customer, editTransaction, addTransaction, updateTransaction, setCustomers, navigate]);
 
-useEffect(() => {
-  if (onSubmit) {
-    onSubmit(() => handleSubmit);
-  }
-}, [onSubmit, handleSubmit]);
-
-
-
-
+  useEffect(() => {
+    if (onSubmit) onSubmit(() => handleSubmit);
+  }, [onSubmit, handleSubmit]);
 
   return (
     <main className="flex-1 px-5 py-6 space-y-6 bg-white">
-      <style>
-        {`
+      <style>{`
         input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-        input[type=number] {
-          -moz-appearance: textfield;
-        }
-      `}
-      </style>
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+      `}</style>
 
-      {/* Sell */}
-      <div className="relative">
+      {/* ✅ Sell — slide in */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.1, duration: 0.3 }}
+        className="relative"
+      >
         <input
-          type="number"
-          id="sell"
-          value={sell}
-          onChange={(e) => {
-            setSell(e.target.value);
-            setBuy(""); 
-          }}
+          type="number" id="sell" value={sell}
+          onChange={(e) => { setSell(e.target.value); setBuy(""); }}
           placeholder=" "
           className="peer w-full px-4 py-4 bg-white border border-gray-200 rounded-xl text-xl font-semibold text-red-600 focus:border-red-500 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all"
         />
-        <label
-          htmlFor="sell"
-          className="absolute left-3 -top-2.5 px-1.5 bg-white text-[13px] font-semibold text-red-600"
-        >
+        <label htmlFor="sell" className="absolute left-3 -top-2.5 px-1.5 bg-white text-[13px] font-semibold text-red-600">
           Sell / দিলাম
         </label>
-      </div>
+      </motion.div>
 
-      {/* Buy */}
-      <div className="relative">
+      {/* ✅ Buy — slide in */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.18, duration: 0.3 }}
+        className="relative"
+      >
         <input
-          type="number"
-          id="buy"
-          value={buy}
-          onChange={(e) => {
-            setBuy(e.target.value);
-            setSell(""); // একসাথে দুইটা না দিতে চাইলে
-          }}
+          type="number" id="buy" value={buy}
+          onChange={(e) => { setBuy(e.target.value); setSell(""); }}
           placeholder=" "
           className="peer w-full px-4 py-4 bg-white border border-gray-200 rounded-xl text-xl font-semibold text-green-600 focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none transition-all"
         />
-        <label
-          htmlFor="buy"
-          className="absolute left-3 -top-2.5 px-1.5 bg-white text-[13px] font-semibold text-green-600"
-        >
+        <label htmlFor="buy" className="absolute left-3 -top-2.5 px-1.5 bg-white text-[13px] font-semibold text-green-600">
           Buy / পেলাম
         </label>
-      </div>
+      </motion.div>
 
-      {/* Details */}
-      <div className="relative">
+      {/* ✅ Details — slide in */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.26, duration: 0.3 }}
+        className="relative"
+      >
         <textarea
-          id="details"
-          rows="2"
-          value={details}
+          id="details" rows="2" value={details}
           onChange={(e) => setDetails(e.target.value)}
           placeholder=" "
           className="peer w-full px-4 py-4 bg-white border border-gray-200 rounded-xl text-gray-700 resize-none focus:border-black focus:ring-1 focus:ring-black focus:outline-none transition-all"
         />
-        <label
-          htmlFor="details"
-          className="absolute left-3 -top-2.5 px-1.5 bg-white text-[13px] font-semibold text-gray-500"
-        >
+        <label htmlFor="details" className="absolute left-3 -top-2.5 px-1.5 bg-white text-[13px] font-semibold text-gray-500">
           Details / বিবরণ
         </label>
-      </div>
+      </motion.div>
 
-      {/* Date & Camera */}
-      <div className="flex gap-4">
+      {/* ✅ Date & Camera — fade in */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.34, duration: 0.3 }}
+        className="flex gap-4"
+      >
         <CustomCalendar value={date} onChange={setDate} />
         <CameraButton onImageSelect={setImage} />
-      </div>
+      </motion.div>
 
-      {/* Image Preview */}
-      {image && (
-        <img
-          src={image}
-          alt="preview"
-          className="w-24 h-24 rounded-xl object-cover"
-        />
-      )}
+      {/* ✅ Image Preview — scale pop */}
+      <AnimatePresence>
+        {image && (
+          <motion.img
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            src={image}
+            alt="preview"
+            className="w-24 h-24 rounded-xl object-cover"
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Submit */}
-      <button
+      {/* ✅ Submit button — slide up + whileTap */}
+      <motion.button
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.3 }}
+        whileTap={{ scale: 0.97 }}
         onClick={handleSubmit}
-        className="w-full bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-all text-white h-14 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-green-600/20"
+        className="w-full bg-green-600 hover:bg-green-700 transition-all text-white h-14 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-green-600/20"
       >
         <FaUserPlus size={18} />
         {editTransaction ? "Update" : "Submit"}
-      </button>
+      </motion.button>
     </main>
   );
 }

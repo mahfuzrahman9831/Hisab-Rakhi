@@ -29,6 +29,8 @@ import { CustomerProvider } from "./Context/CustomerContext";
 import TrashPage from "./pages/TrashPage";
 import UserProfilePage from "./assets/Components/UserProfile/UserProfilePage";
 import { AnimatePresence } from "framer-motion";
+import FeedbackPage from "./pages/FeedbackPage";
+import NotificationsPage from "./pages/NotificationsPage";
 
 // ✅ নতুন import
 import { AuthProvider } from "./Context/AuthContext";
@@ -54,144 +56,156 @@ function App() {
           <div className="min-h-screen flex flex-col bg-gray-50">
             <div className="flex-1">
               <AnimatePresence mode="wait">
-              <Routes location={location} key={location.pathname}>
-                {/* ✅ Public Routes — যে কেউ দেখতে পারবে */}
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegistrationPage />} />
-                <Route path="/otp" element={<OTPPage />} />
-                <Route path="/shop-setup" element={<ShopSetupPage />} />
-                <Route path="/pin-setup" element={<PinSetupPage />} />
-                <Route
-                  path="/pin-login"
-                  element={<SecurityPinPage mode="login" />}
-                />
-                <Route
-                  path="/pin-setup"
-                  element={<SecurityPinPage mode="setup" />}
-                />
+                <Routes location={location} key={location.pathname}>
+                  {/* ✅ Public Routes — যে কেউ দেখতে পারবে */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegistrationPage />} />
+                  <Route path="/otp" element={<OTPPage />} />
+                  <Route path="/shop-setup" element={<ShopSetupPage />} />
+                  <Route path="/pin-setup" element={<PinSetupPage />} />
+                  <Route
+                    path="/pin-login"
+                    element={<SecurityPinPage mode="login" />}
+                  />
+                  <Route
+                    path="/pin-setup"
+                    element={<SecurityPinPage mode="setup" />}
+                  />
 
-                {/* ✅ Protected Routes — শুধু লগইন করলে দেখা যাবে */}
-                <Route
-                  path="/"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/customer"
-                  element={
-                    <ProtectedRoute>
-                      <Customer />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/report"
-                  element={
-                    <ProtectedRoute>
-                      <Report />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <ProtectedRoute>
-                      <Settings />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/add-customer"
-                  element={
-                    <ProtectedRoute>
-                      <AddCustomerPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/customer/:id"
-                  element={
-                    <ProtectedRoute>
-                      <CustomerDetails />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/transaction-complete"
-                  element={
-                    <ProtectedRoute>
-                      <CompleteTransactionPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/customer/:id/report"
-                  element={
-                    <ProtectedRoute>
-                      <CustomerTransactionReportNew />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/customer/:id/edit"
-                  element={
-                    <ProtectedRoute>
-                      <EditCustomerPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/customer/:id/delete"
-                  element={
-                    <ProtectedRoute>
-                      <DeleteCustomerPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/transaction/:transactionId"
-                  element={
-                    <ProtectedRoute>
-                      <SingleTransactionPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/customer/:id/report/edit/:transactionId"
-                  element={
-                    <ProtectedRoute>
-                      <CustomerTransactionPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/success"
-                  element={
-                    <ProtectedRoute>
-                      <CustomerSuccessPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/trash"
-                  element={
-                    <ProtectedRoute>
-                      <TrashPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute>
-                      <UserProfilePage />
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
+                  {/* ✅ Protected Routes — শুধু লগইন করলে দেখা যাবে */}
+                  <Route
+                    path="/"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/customer"
+                    element={
+                      <ProtectedRoute>
+                        <Customer />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/report"
+                    element={
+                      <ProtectedRoute>
+                        <Report />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/settings"
+                    element={
+                      <ProtectedRoute>
+                        <Settings />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/add-customer"
+                    element={
+                      <ProtectedRoute>
+                        <AddCustomerPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/customer/:id"
+                    element={
+                      <ProtectedRoute>
+                        <CustomerDetails />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/transaction-complete"
+                    element={
+                      <ProtectedRoute>
+                        <CompleteTransactionPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/customer/:id/report"
+                    element={
+                      <ProtectedRoute>
+                        <CustomerTransactionReportNew />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/customer/:id/edit"
+                    element={
+                      <ProtectedRoute>
+                        <EditCustomerPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/customer/:id/delete"
+                    element={
+                      <ProtectedRoute>
+                        <DeleteCustomerPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/transaction/:transactionId"
+                    element={
+                      <ProtectedRoute>
+                        <SingleTransactionPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/customer/:id/report/edit/:transactionId"
+                    element={
+                      <ProtectedRoute>
+                        <CustomerTransactionPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/success"
+                    element={
+                      <ProtectedRoute>
+                        <CustomerSuccessPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/trash"
+                    element={
+                      <ProtectedRoute>
+                        <TrashPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <UserProfilePage />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/feedback"
+                    element={
+                      <ProtectedRoute>
+                        <FeedbackPage />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+                  
+                </Routes>
               </AnimatePresence>
             </div>
 
